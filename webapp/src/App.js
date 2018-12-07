@@ -1,25 +1,65 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import openSocket from 'socket.io-client';
+// connection to server	
+const socket = openSocket('http://localhost:8000');
+
+// [dimRows, dimCols]
+const dim = [3, 3];
+
+
+class Square extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state ={
+      class: "",
+    }
+  }
+  render() {
+    return (
+      <button className={"square " + this.props.class} />
+    );
+  }
+}
+
+class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    // server broadcasts the game state in a regular interval
+    // set Board state to trigger an automatic rerender
+    socket.on('broadcast', data => this.setState(data));
+    this.state = {
+       // initialize empty grid
+       grid: [ //TODO make this depend on dim
+        ["", "", ""], 
+        ["", "", ""], 
+        ["", "", ""], 
+      ]
+    }
+  }
+  render() { // whole board has to be rendered on every state change
+    return (
+      <div>
+        {[...Array(dim[0])].map((_, rowIndex) =>
+          <div className="board-row" key={rowIndex}>
+            {[...Array(dim[1])].map((_, columnIndex) =>
+              <Square key={rowIndex * columnIndex + columnIndex} 
+              class={this.state.grid[rowIndex][columnIndex]}/>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
+}
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="game">
+        <div className="game-board">
+          <Board />
+        </div>
       </div>
     );
   }
