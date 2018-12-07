@@ -1,0 +1,19 @@
+{
+  "name": "gameofhive",
+  "version": "0.0.1",
+  "description": "web-engineering project GameOfHive",
+  "main": "webapp/public/index.html",
+  "dependencies": {
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.fh-aachen.de/web-eng_browsergame/gameofhive.git"
+  },
+  "author": "Ruben Simons, Kira Hosse, Nils Wallenfang",
+  "license": "ISC"
+}

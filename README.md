@@ -2,7 +2,6 @@
 **Backend** \
 Make sure that you are located in the project root directory.
 - `npm install`
-- `npm install socket.io`
 
 You can start the server by calling\
 `node src/networking/server`
@@ -11,7 +10,6 @@ You can start the server by calling\
 **Frontend** \
 Make sure that you are located in the `webapp/` directory.
 - `npm install`
-- `npm install socket.io-client`
 
 You can start the app by calling\
 `npm start`\
