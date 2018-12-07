@@ -28,14 +28,18 @@ class Board extends React.Component {
     // server broadcasts the game state in a regular interval
     // set Board state to trigger an automatic rerender
     socket.on('broadcast', data => this.setState(data));
+
     this.state = {
-       // initialize empty grid
-       grid: [ //TODO make this depend on dim
-        ["", "", ""], 
-        ["", "", ""], 
-        ["", "", ""], 
+       boardData: [
       ]
     }
+    // initialize empty grid
+    for(let i = 0; i < dim[0]; i++) {
+      this.state.boardData.push(Array());
+      for(let j = 0; j < dim[1]; j++) {
+        this.state.boardData[i].push("");
+      }
+  }
   }
   render() { // whole board has to be rendered on every state change
     return (
@@ -44,7 +48,7 @@ class Board extends React.Component {
           <div className="board-row" key={rowIndex}>
             {[...Array(dim[1])].map((_, columnIndex) =>
               <Square key={rowIndex * columnIndex + columnIndex} 
-              class={this.state.grid[rowIndex][columnIndex]}/>
+              class={this.state.boardData[rowIndex][columnIndex]}/>
             )}
           </div>
         )}
