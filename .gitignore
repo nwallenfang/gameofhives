@@ -89,3 +89,4 @@ typings/
 .idea/gameofhive.iml
 .idea/misc.xml
 .idea/modules.xml
+yarn.lock
