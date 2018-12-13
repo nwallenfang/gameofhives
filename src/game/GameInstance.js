@@ -95,5 +95,6 @@ class GameInstance{
                 future_field[i].push(this.getNewFieldState());
             }
         }
+        this.gamefield = future_field;
     }
 }
