@@ -84,3 +84,8 @@ typings/
 .dynamodb/
 
 # End of https://www.gitignore.io/api/node
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/gameofhive.iml
+.idea/misc.xml
+.idea/modules.xml
