@@ -79,10 +79,10 @@ class GameInstance {
   // returns a 2d-array of CSS classes representing the gamefield
   getFieldClasses() {
     var result = [];
-    for (let i = 0; i < this.width; i++) {
+    for (let i = 0; i < this.height; i++) {
       result.push([]);
-      for (let j = 0; j < this.height; j++) {
-        result[i].push(playerCodes.toCSSClass(this.gamefield[i][j]));
+      for (let j = 0; j < this.width; j++) {
+        result[i].push(playerCodes.toCSSClass(this.gamefield[j][i]));
       }
     }
     return result;

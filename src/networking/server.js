@@ -5,7 +5,7 @@ const io = require('socket.io')();
 // number of rows, number of columns, keep a ratio of 9:16
 const dim = [9,16];
 // time per tick in ms
-const tickLength = 2000;
+const tickLength = 8000;
 // list of possible square states. define a css class for each of these in the frontend
 const classes = ["", "red", "blue"];
 
@@ -19,7 +19,8 @@ var gameInstance = new GameInstance(9, 16);
 var data = {
   // 2d-array of square states
   boardData: [ 
-  ]
+  ],
+  tickLength: tickLength,
 };
 
 for(let i = 0; i < dim[0]; i++) {
@@ -41,14 +42,15 @@ io.on('connection', (client) => {
 
     client.on('clickEvent', function(data){
         console.log('client' + client.id + ' clicked on ' + data.rowIndex + '|' + data.columnIndex);
-        gameInstance.setField(data.rowIndex, data.columnIndex, client.playerCode);
+        gameInstance.setField(data.columnIndex, data.rowIndex, client.playerCode);
     });
 });
 
 setInterval(() => {
     // this is the entry point for the game logic
     data.boardData = gameInstance.getFieldClasses();
-    console.log(data.boardData);
+
+    console.log(data);
     // send data to every client
     io.sockets.emit('broadcast', data);
 }, tickLength);

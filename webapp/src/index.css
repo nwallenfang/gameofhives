@@ -18,10 +18,11 @@ code {
   width: 100%;
   background-color: grey;
   margin-bottom: 20px;
+  height: 30px;
 }
 
 #myBar {
-  width: 1%;
+  width: 20%;
   height: 30px;
   background-color: green;
 }
@@ -61,10 +62,6 @@ ol, ul {
   display: flex;
   flex-direction: row;
 
-}
-
-.status {
-  margin-bottom: 10px;
 }
 
 .square {
