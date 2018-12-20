@@ -1,3 +1,6 @@
+const GameInstance = require('../game/GameInstance');
+const playerCodes = require('../game/playerCodes');
+
 const io = require('socket.io')();
 // number of rows, number of columns, keep a ratio of 9:16
 const dim = [9,16];
@@ -8,8 +11,9 @@ const classes = ["", "red", "blue"];
 
 const port = 8000;
 
-// count clients to give each one a unique id
-var clientCounter = 0;
+var clientCount = 0;
+
+var gameInstance = new GameInstance(9, 16);
 
 
 var data = {
@@ -27,20 +31,23 @@ for(let i = 0; i < dim[0]; i++) {
 
 io.on('connection', (client) => {
     console.log('client' + client.id + ' has connected');
+    // assign client a playerCode
+    if(clientCount === 0) {
+        client.playerCode = playerCodes.PLAYER_1
+    } else {
+        client.playerCode = playerCodes.PLAYER_2
+    }
+
     client.on('clickEvent', function(data){
         console.log('client' + client.id + ' clicked on ' + data.rowIndex + '|' + data.columnIndex);
+        gameInstance.setField(data.rowIndex, data.columnIndex, client.playerCode);
     });
 });
 
 setInterval(() => {
     // this is the entry point for the game logic
-    // generate some random grid for now
-    for(let row = 0; row < dim[0]; row++) {
-        for(let col = 0; col < dim[1]; col++) {
-            var randomInt = Math.floor(Math.random() * classes.length);
-            data.boardData[row][col] = classes[randomInt];
-        }
-    }
+    data.boardData = gameInstance.gamefield;
+    console.log(data.boardData);
     // send data to every client
     io.sockets.emit('broadcast', data);
 }, tickLength);
