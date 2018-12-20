@@ -12,10 +12,10 @@ class Square extends React.Component {
     super(props);
     this.state ={
       class: "",
-    }
+    } 
   }
   render() {
-    return (
+    return (  // {...} entspricht <script> ... </script>
       <button className={"square " + this.props.class}
               onClick={() => this.props.onClick()} />
     );
@@ -26,9 +26,9 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     // server broadcasts the game state in a regular interval
-    // set Board state to trigger an automatic rerender
+    // set Board state to trigger an automatic render
     socket.on('broadcast', data => this.setState(data));
-
+    
     this.state = {
        boardData: [
       ]
@@ -55,6 +55,7 @@ class Board extends React.Component {
   }
 }
 
+
 class App extends Component {
   render() {
     return (
@@ -62,7 +63,7 @@ class App extends Component {
         <div className="game-board">
           <Board />
         </div>
-      </div>
+      </div>  
     );
   }
 }
