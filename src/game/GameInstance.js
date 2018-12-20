@@ -75,6 +75,18 @@ class GameInstance {
     }
     this.gamefield = futureField;
   }
+
+  // returns a 2d-array of CSS classes representing the gamefield
+  getFieldClasses() {
+    var result = [];
+    for (let i = 0; i < this.width; i++) {
+      result.push([]);
+      for (let j = 0; j < this.height; j++) {
+        result[i].push(playerCodes.toCSSClass(this.gamefield[i][j]));
+      }
+    }
+    return result;
+  }
 }
 
 // makes the class GameInstance importable

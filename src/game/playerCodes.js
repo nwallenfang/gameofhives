@@ -4,9 +4,9 @@ module.exports = {
     PLAYER_2: 2,
     toCSSClass(playerCode) {
         switch(playerCode) {
-            case PLAYER_1: return 'red';
-            case PLAYER_2: return 'blue';
-            case NON_SPECIFIED: return '';
+            case 1: return 'red';
+            case 2: return 'blue';
+            case 0: return '';
         }
     }
 };

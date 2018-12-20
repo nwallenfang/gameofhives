@@ -37,6 +37,7 @@ io.on('connection', (client) => {
     } else {
         client.playerCode = playerCodes.PLAYER_2
     }
+    clientCount++;
 
     client.on('clickEvent', function(data){
         console.log('client' + client.id + ' clicked on ' + data.rowIndex + '|' + data.columnIndex);
@@ -46,7 +47,7 @@ io.on('connection', (client) => {
 
 setInterval(() => {
     // this is the entry point for the game logic
-    data.boardData = gameInstance.gamefield;
+    data.boardData = gameInstance.getFieldClasses();
     console.log(data.boardData);
     // send data to every client
     io.sockets.emit('broadcast', data);
