@@ -9,13 +9,15 @@ class GameInstance {
         this.gamefield[i].push(playerCodes.NON_SPECIFIED);
       }
     }
+    this.player_tmp = [[-1, -1], [-1, -1]];
     this.height = height;
     this.width = width;
   }
 
   setField(x, y, playerCode) {
     if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
-      this.gamefield[x][y] = playerCode;
+      this.player_tmp[playerCode - 1] = [x, y];
+      console.log(this.player_tmp[playerCode - 1])
     }
   }
 
@@ -74,6 +76,25 @@ class GameInstance {
         futureField[i].push(this.getNewFieldState(i, j));
       }
     }
+
+    if (this.player_tmp[0][0] !== -1)
+    {
+      futureField[this.player_tmp[0][0]][this.player_tmp[0][1]] = playerCodes.PLAYER_1;
+      console.log("Got here 1");
+    }
+    if (this.player_tmp[1][0] !== -1)
+    {
+      console.log("Got here 2");
+      if (this.player_tmp[1][0] === this.player_tmp[0][0] && this.player_tmp[1][1] === this.player_tmp[0][1]) {
+        futureField[this.player_tmp[1][0]][this.player_tmp[1][1]] = playerCodes.NON_SPECIFIED;
+      }
+      else {
+        futureField[this.player_tmp[1][0]][this.player_tmp[1][1]] = playerCodes.PLAYER_2;
+      }
+    }
+    this.player_tmp = [[-1, -1], [-1, -1]];
+
+
     this.gamefield = futureField;
   }
 
