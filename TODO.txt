@@ -1,0 +1,3 @@
+1. neu hinzugefügte Kacheln sollen sich erst in der übernächsten Auswertung ausbreiten
+2. Ausgewählte Kachel mit einem 'X' markieren
+3. nur eine Kachel pro Zug
