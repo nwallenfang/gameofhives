@@ -46,10 +46,11 @@ class GameInstance {
   getNewFieldState(x, y) {
     let p1Count = 0;
     let p2Count = 0;
-    const adjacentCells = this.getAdjacentCells();
+    const adjacentCells = this.getAdjacentCells(x, y);
     for (let i = 0; i < adjacentCells.length; i++) {
       const xx = adjacentCells[i][0];
       const yy = adjacentCells[i][1];
+    
       if (this.gamefield[xx][yy] === playerCodes.PLAYER_1) {
         p1Count++;
       } else if (this.gamefield[xx][yy] === playerCodes.PLAYER_2) {
@@ -70,7 +71,7 @@ class GameInstance {
     for (let i = 0; i < this.width; i++) {
       futureField.push([]);
       for (let j = 0; j < this.height; j++) {
-        futureField[i].push(this.getNewFieldState());
+        futureField[i].push(this.getNewFieldState(i, j));
       }
     }
     this.gamefield = futureField;

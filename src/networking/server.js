@@ -5,7 +5,7 @@ const io = require('socket.io')();
 // number of rows, number of columns, keep a ratio of 9:16
 const dim = [9,16];
 // time per tick in ms
-const tickLength = 8000;
+const tickLength = 4000;
 // list of possible square states. define a css class for each of these in the frontend
 const classes = ["", "red", "blue"];
 
@@ -48,6 +48,7 @@ io.on('connection', (client) => {
 
 setInterval(() => {
     // this is the entry point for the game logic
+    gameInstance.updateField();
     data.boardData = gameInstance.getFieldClasses();
 
     console.log(data);
