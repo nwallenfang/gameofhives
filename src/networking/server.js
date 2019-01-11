@@ -34,9 +34,12 @@ io.on('connection', (client) => {
     console.log('client' + client.id + ' has connected');
     // assign client a playerCode
     if(clientCount === 0) {
-        client.playerCode = playerCodes.PLAYER_1
+        client.playerCode = playerCodes.PLAYER_1;
+    } else if(clientCount === 1) {
+        client.playerCode = playerCodes.PLAYER_2;
     } else {
-        client.playerCode = playerCodes.PLAYER_2
+        //TODO catch too many players 
+        client.playerCode = playerCodes.NON_SPECIFIED;
     }
     clientCount++;
 
@@ -51,7 +54,6 @@ setInterval(() => {
     gameInstance.updateField();
     data.boardData = gameInstance.getFieldClasses();
 
-    console.log(data);
     // send data to every client
     io.sockets.emit('broadcast', data);
 }, tickLength);

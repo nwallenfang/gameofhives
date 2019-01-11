@@ -13,12 +13,16 @@ class Square extends React.Component {
     super(props);
     this.state ={
       class: "",
+      isPreselected: false,
     } 
   }
   render() {
     return (  // {...} entspricht <script> ... </script>
-      <button className={"square " + this.props.class}
-              onClick={() => this.props.onClick()} />
+      <button className={"square " + this.props.class + (this.state.isPreselected ? " lighterBackground" : " ")}
+              onClick={() => {
+                this.setState((prevState) => { return {...prevState, isPreselected: true};});
+                this.props.onClick();
+              }} />
     );
   }
 }
@@ -32,7 +36,11 @@ class Board extends React.Component {
     
     this.state = {
        boardData: [
-      ]
+      ],
+      preselectedTile: {
+        rowIndex: undefined,
+        colIndex: undefined,
+      },
     }
     
   }
