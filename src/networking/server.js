@@ -13,8 +13,10 @@ const port = 8000;
 
 var clientCount = 0;
 
-var gameInstance = new GameInstance(9, 16);
+var gameInstance = new GameInstance(dim[0], dim[1]);
 
+// array containing the client-ids of the clients currently playing  
+var isPlaying = [];
 
 var data = {
   // 2d-array of square states
@@ -31,18 +33,21 @@ for(let i = 0; i < dim[0]; i++) {
 }
 
 io.on('connection', (client) => {
-    console.log('client' + client.id + ' has connected');
+    console.log('client ' + client.id + ' has connected');
     // assign client a playerCode
     if(clientCount === 0) {
         client.playerCode = playerCodes.PLAYER_1
     } else {
         client.playerCode = playerCodes.PLAYER_2
     }
-    clientCount++;
-
+    clientCount++; //use isPlaying array instead
     client.on('clickEvent', function(data){
-        console.log('client' + client.id + ' clicked on ' + data.rowIndex + '|' + data.columnIndex);
+        console.log('client ' + client.id + ' clicked on ' + data.rowIndex + '|' + data.columnIndex);
         gameInstance.setField(data.columnIndex, data.rowIndex, client.playerCode);
+    });
+    client.on('join', (data) => {
+        isPlaying.push(client.id);
+        console.log('client ' + client.id + ' joined the game');
     });
 });
 
@@ -50,11 +55,14 @@ setInterval(() => {
     // this is the entry point for the game logic
     gameInstance.updateField();
     data.boardData = gameInstance.getFieldClasses();
-
-    console.log(data);
     // send data to every client
+    isPlaying.forEach((clientId) => {
+        io.to(clientId).emit('dataBroadcast', data);
+    });
     io.sockets.emit('broadcast', data);
 }, tickLength);
+
+
 
 
 io.listen(port);

@@ -13,6 +13,10 @@ code {
     monospace;
 }
 
+.titleBar {
+  margin-bottom: 20px;
+}
+
 /* dank geht raus an https://www.w3schools.com/howto/howto_js_progressbar.asp */
 #myProgress {
   width: 100%;

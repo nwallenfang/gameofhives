@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import openSocket from 'socket.io-client';
 import { setInterval } from 'timers';
+import { Button, ButtonGroup } from 'react-bootstrap';
+
 // connection to server	
-const socket = openSocket('http://localhost:8000');
+const socket = openSocket('http://192.168.0.199:8000');
 
 // [dimRows, dimCols]
 
@@ -28,7 +30,7 @@ class Board extends React.Component {
     super(props);
     // server broadcasts the game state in a regular interval
     // set Board state to trigger an automatic render
-    socket.on('broadcast', data => this.setState(data));
+    socket.on('dataBroadcast', data => this.setState(data));
     
     this.state = {
        boardData: [
@@ -55,7 +57,6 @@ class Board extends React.Component {
                     <Square key={rowIndex * columnIndex + columnIndex} 
                     class={this.state.boardData[rowIndex][columnIndex]}
                     onClick = {() => {
-                      console.log("clicked"); 
                       socket.emit("clickEvent", {
                         rowIndex: rowIndex,
                         columnIndex: columnIndex,
@@ -78,7 +79,7 @@ class LoadingBar extends Component {
       width: 0,
 
     }
-    socket.on('broadcast', data => {
+    socket.on('dataBroadcast', data => {
       this.setState({
         width: 0
       });
@@ -109,12 +110,23 @@ class LoadingBar extends Component {
   }
 }
 
-
-
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.setState({
+      ingame: false,
+    })
+  }
   render() {
     return (
       <div id="wrapper">
+        <ButtonGroup className="titleBar" bsSize="large">
+          <Button>Register</Button>
+          <Button>Login</Button>
+          <Button onClick = {() => {socket.emit("join"); console.log("join");} }>Play</Button>
+        </ButtonGroup>
+        
         <Board />  
       </div>
     );
