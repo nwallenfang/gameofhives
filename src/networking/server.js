@@ -36,9 +36,12 @@ io.on('connection', (client) => {
     console.log('client ' + client.id + ' has connected');
     // assign client a playerCode
     if(clientCount === 0) {
-        client.playerCode = playerCodes.PLAYER_1
+        client.playerCode = playerCodes.PLAYER_1;
+    } else if(clientCount === 1) {
+        client.playerCode = playerCodes.PLAYER_2;
     } else {
-        client.playerCode = playerCodes.PLAYER_2
+        //TODO catch too many players 
+        client.playerCode = playerCodes.NON_SPECIFIED;
     }
     clientCount++; //use isPlaying array instead
     client.on('clickEvent', function(data){
@@ -55,6 +58,10 @@ setInterval(() => {
     // this is the entry point for the game logic
     gameInstance.updateField();
     data.boardData = gameInstance.getFieldClasses();
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/nilsVormarkieren
     // send data to every client
     isPlaying.forEach((clientId) => {
         io.to(clientId).emit('dataBroadcast', data);

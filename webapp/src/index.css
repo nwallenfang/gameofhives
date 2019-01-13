@@ -83,15 +83,20 @@ ol, ul {
   width: 34px;
   flex-grow: 1;
   padding-top: 6.15%; /* trial and error value */
-}
+}   
 
 .blue {
-  background: rgb(54, 15, 224);
+  background: rgb(39,167,216);
+}
+
+.lighterBackground { /* used to mark selected tile */
+  opacity: 0.5;
 }
 
 .red {
-  background: rgb(224, 15, 15);
+  background: rgb(255,154,0);
 }
+
 .square:focus {
   outline: none;
 }
