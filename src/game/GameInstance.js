@@ -17,7 +17,6 @@ class GameInstance {
   setField(x, y, playerCode) {
     if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
       this.player_tmp[playerCode - 1] = [x, y];
-      console.log(this.player_tmp[playerCode - 1])
     }
   }
 
@@ -80,11 +79,9 @@ class GameInstance {
     if (this.player_tmp[0][0] !== -1)
     {
       futureField[this.player_tmp[0][0]][this.player_tmp[0][1]] = playerCodes.PLAYER_1;
-      console.log("Got here 1");
     }
     if (this.player_tmp[1][0] !== -1)
     {
-      console.log("Got here 2");
       if (this.player_tmp[1][0] === this.player_tmp[0][0] && this.player_tmp[1][1] === this.player_tmp[0][1]) {
         futureField[this.player_tmp[1][0]][this.player_tmp[1][1]] = playerCodes.NON_SPECIFIED;
       }
