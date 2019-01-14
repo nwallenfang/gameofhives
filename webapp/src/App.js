@@ -8,6 +8,7 @@ import { Button, ButtonGroup } from 'react-bootstrap';
 const socket = openSocket('http://localhost:8000');
 
 
+
 class Square extends React.Component {
   constructor(props) {
     super(props);
