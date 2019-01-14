@@ -5,9 +5,7 @@ import { setInterval } from 'timers';
 import { Button, ButtonGroup } from 'react-bootstrap';
 
 // connection to server	
-const socket = openSocket('http://192.168.0.199:8000');
-
-// [dimRows, dimCols]
+const socket = openSocket('http://localhost:8000');
 
 
 class Square extends React.Component {
@@ -20,7 +18,7 @@ class Square extends React.Component {
   }
   render() {
     return (  // {...} entspricht <script> ... </script>
-      <button className={"square " + this.props.class + (this.state.isPreselected ? " lighterBackground" : " ")}
+      <button className={"square " + this.props.class + (this.props.preselected ? " lighterBackground " + this.props.color : " ")}
               onClick={() => {
                 this.setState((prevState) => { return {...prevState, isPreselected: true};});
                 this.props.onClick();
@@ -34,8 +32,8 @@ class Board extends React.Component {
     super(props);
     // server broadcasts the game state in a regular interval
     // set Board state to trigger an automatic render
-    socket.on('dataBroadcast', data => this.setState(data));
-    
+    socket.on('dataBroadcast', data => this.setState((previousState) => {return {...previousState, ...data};}));
+    socket.on('playerColor', data => this.setState((previousState) => { return {...previousState, color: data.color};}));
     this.state = {
        boardData: [
       ],
@@ -43,14 +41,15 @@ class Board extends React.Component {
         rowIndex: undefined,
         colIndex: undefined,
       },
-    }
-    
+      color: undefined // move to props
+    }  
   }
+
   render() { // whole board has to be rendered on every state change
     let loadingBar;
     if(this.state.tickLength !== undefined) {
       loadingBar = <LoadingBar tickLength={this.state.tickLength} />
-    } else {
+    } else { // don't show a loadingBar if the server has not sent tickLength yet
       loadingBar = <div />
     }
     return (
@@ -68,7 +67,14 @@ class Board extends React.Component {
                       socket.emit("clickEvent", {
                         rowIndex: rowIndex,
                         columnIndex: columnIndex,
-                    })}}/>
+                      });
+                      this.setState((oldState) => { return {...oldState, preselectedTile: {
+                        rowIndex: rowIndex, colIndex:columnIndex
+                      }};});
+                    }}
+                    preselected={rowIndex === this.state.preselectedTile.rowIndex && columnIndex === this.state.preselectedTile.colIndex}
+                    color={this.state.color}
+                    />
                   )}
                 </div>
               )}
@@ -122,9 +128,9 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.setState({
+    this.state = {
       ingame: false,
-    })
+    };
   }
   render() {
     return (
@@ -132,7 +138,7 @@ class App extends Component {
         <ButtonGroup className="titleBar" bsSize="large">
           <Button>Register</Button>
           <Button>Login</Button>
-          <Button onClick = {() => {socket.emit("join"); console.log("join");} }>Play</Button>
+          <Button onClick = {() => {socket.emit("join");} }>Play</Button>
         </ButtonGroup>
         
         <Board />  

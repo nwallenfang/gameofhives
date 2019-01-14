@@ -23,6 +23,10 @@ var data = {
   boardData: [ 
   ],
   tickLength: tickLength,
+  preselectedTile: {
+    rowIndex: undefined,
+    colIndex: undefined,
+  },
 };
 
 for(let i = 0; i < dim[0]; i++) {
@@ -43,14 +47,18 @@ io.on('connection', (client) => {
         //TODO catch too many players 
         client.playerCode = playerCodes.NON_SPECIFIED;
     }
-    clientCount++; //use isPlaying array instead
+    
     client.on('clickEvent', function(data){
         console.log('client ' + client.id + ' clicked on ' + data.rowIndex + '|' + data.columnIndex);
         gameInstance.setField(data.columnIndex, data.rowIndex, client.playerCode);
     });
-    client.on('join', (data) => {
+    client.on('join', () => {
         isPlaying.push(client.id);
         console.log('client ' + client.id + ' joined the game');
+        // player color needs to be sent to the client to render the preselected tile correctly
+        // the color will probably have other uses on the client-side in the future as well
+        let data = {color: playerCodes.toCSSClass(++clientCount)};
+        io.to(client.id).emit("playerColor", data);
     });
 });
 
@@ -58,12 +66,10 @@ setInterval(() => {
     // this is the entry point for the game logic
     gameInstance.updateField();
     data.boardData = gameInstance.getFieldClasses();
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/nilsVormarkieren
     // send data to every client
     isPlaying.forEach((clientId) => {
+        console.log("client " + clientId + " receives boardData");
+        console.log(data);
         io.to(clientId).emit('dataBroadcast', data);
     });
     io.sockets.emit('broadcast', data);
