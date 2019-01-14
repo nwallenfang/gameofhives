@@ -5,7 +5,7 @@ import { setInterval } from 'timers';
 import { Button, ButtonGroup } from 'react-bootstrap';
 
 // connection to server	
-const socket = openSocket('http://192.168.0.199:8000');
+const socket = openSocket('http://localhost:8000');
 
 // [dimRows, dimCols]
 
