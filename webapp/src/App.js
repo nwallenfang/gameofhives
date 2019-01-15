@@ -60,38 +60,36 @@ class Board extends React.Component {
         {loadingBar}
         <div className="game">
           <div className="game-board">
-            <div id="wrapper" className="verticalContainer">
-              {[...Array(this.state.boardData.length)].map((_, rowIndex) =>
-                <div className="board-row" key={rowIndex}>
-                  {[...Array(this.state.boardData[rowIndex].length)].map((_, columnIndex) =>
-                    <Square key={rowIndex * this.state.boardData[rowIndex].length + columnIndex}
-                      class={this.state.boardData[rowIndex][columnIndex]}
-                      onClick={() => {
-                        // send every click to the server
-                        socket.emit("clickEvent", {
-                          rowIndex: rowIndex,
-                          columnIndex: columnIndex,
-                        });
-                        // save coordinates of the latest selection in state in order to render 
-                        // the square differently
-                        this.setState((oldState) => {
-                          return {
-                            ...oldState, preselectedTile: {
-                              rowIndex: rowIndex, colIndex: columnIndex
-                            }
-                          };
-                        });
-                      }}
-                      preselected={rowIndex === this.state.preselectedTile.rowIndex && columnIndex === this.state.preselectedTile.colIndex}
-                      // at the moment, color property is only used to render the preselected square
-                      // maybe the player's color should be displayed in the title bar in the 
-                      // beginning of the game
-                      color={this.state.color}
-                    />
-                  )}
-                </div>
-              )}
-            </div>
+            {[...Array(this.state.boardData.length)].map((_, rowIndex) =>
+              <div className="board-row" key={rowIndex}>
+                {[...Array(this.state.boardData[rowIndex].length)].map((_, columnIndex) =>
+                  <Square key={rowIndex * this.state.boardData[rowIndex].length + columnIndex}
+                    class={this.state.boardData[rowIndex][columnIndex]}
+                    onClick={() => {
+                      // send every click to the server
+                      socket.emit("clickEvent", {
+                        rowIndex: rowIndex,
+                        columnIndex: columnIndex,
+                      });
+                      // save coordinates of the latest selection in state in order to render 
+                      // the square differently
+                      this.setState((oldState) => {
+                        return {
+                          ...oldState, preselectedTile: {
+                            rowIndex: rowIndex, colIndex: columnIndex
+                          }
+                        };
+                      });
+                    }}
+                    preselected={rowIndex === this.state.preselectedTile.rowIndex && columnIndex === this.state.preselectedTile.colIndex}
+                    // at the moment, color property is only used to render the preselected square
+                    // maybe the player's color should be displayed in the title bar in the 
+                    // beginning of the game
+                    color={this.state.color}
+                  />
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
