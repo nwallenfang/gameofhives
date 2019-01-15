@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import './App.css';
-import openSocket from 'socket.io-client';
-import { setInterval } from 'timers';
+import './styles/App.css';
 import { Button, ButtonGroup } from 'react-bootstrap';
-
+import { LoadingBar } from './LoadingBar';
 // connection to server	
-const socket = openSocket('http://localhost:8000');
+import { socket } from './Socket';
 
 
 
@@ -35,6 +33,7 @@ class Board extends React.Component {
     // set Board state to trigger an automatic render
     socket.on('dataBroadcast', data =>
       this.setState((previousState) => { return { ...previousState, ...data }; }));
+    // TODO wait for playerColor before rendering the board -> move this to the state of the parent // component. additionally, a normal fetch / ajax request would be more fitting to determine color
     socket.on('playerColor', data =>
       this.setState((previousState) => { return { ...previousState, color: data.color }; }));
     this.state = {
@@ -97,43 +96,6 @@ class Board extends React.Component {
   }
 }
 
-class LoadingBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      width: 0,
-
-    }
-    socket.on('dataBroadcast', () => {
-      this.setState({
-        width: 0
-      });
-    });
-    setInterval(() => {
-      this.setState((prevState, props) => {
-        if (prevState.width < 100) {
-          return ({
-            width: prevState.width + 1
-          });
-        } else {
-          return prevState;
-        }
-      });
-    }, this.props.tickLength / 100);
-
-  }
-
-  render() {
-    let widthStyle = {
-      width: this.state.width + '%',
-    };
-    return (
-      <div id="myProgress">
-        <div id="myBar" style={widthStyle} />
-      </div>
-    );
-  }
-}
 
 class App extends Component {
 
