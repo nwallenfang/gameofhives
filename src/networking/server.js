@@ -3,7 +3,7 @@ const playerCodes = require('../game/playerCodes');
 
 const io = require('socket.io')();
 // number of rows, number of columns, keep a ratio of 9:16
-const dim = [9,16];
+const dim = [9, 16];
 // time per tick in ms
 const tickLength = 4000;
 // list of possible square states. define a css class for each of these in the frontend
@@ -19,19 +19,19 @@ var gameInstance = new GameInstance(dim[0], dim[1]);
 var isPlaying = [];
 
 var data = {
-  // 2d-array of square states
-  boardData: [ 
-  ],
-  tickLength: tickLength,
-  preselectedTile: {
-    rowIndex: undefined,
-    colIndex: undefined,
-  },
+    // 2d-array of square states
+    boardData: [
+    ],
+    tickLength: tickLength,
+    preselectedTile: {
+        rowIndex: undefined,
+        colIndex: undefined,
+    },
 };
 
-for(let i = 0; i < dim[0]; i++) {
+for (let i = 0; i < dim[0]; i++) {
     data.boardData.push(Array());
-    for(let j = 0; j < dim[1]; j++) {
+    for (let j = 0; j < dim[1]; j++) {
         data.boardData[i].push("");
     }
 }
@@ -39,16 +39,16 @@ for(let i = 0; i < dim[0]; i++) {
 io.on('connection', (client) => {
     console.log('client ' + client.id + ' has connected');
     // assign client a playerCode
-    if(clientCount === 0) {
+    if (clientCount === 0) {
         client.playerCode = playerCodes.PLAYER_1;
-    } else if(clientCount === 1) {
+    } else if (clientCount === 1) {
         client.playerCode = playerCodes.PLAYER_2;
     } else {
         //TODO catch too many players 
         client.playerCode = playerCodes.NON_SPECIFIED;
     }
-    
-    client.on('clickEvent', function(data){
+
+    client.on('clickEvent', function (data) {
         console.log('client ' + client.id + ' clicked on ' + data.rowIndex + '|' + data.columnIndex);
         gameInstance.setField(data.columnIndex, data.rowIndex, client.playerCode);
     });
@@ -57,7 +57,7 @@ io.on('connection', (client) => {
         console.log('client ' + client.id + ' joined the game');
         // player color needs to be sent to the client to render the preselected tile correctly
         // the color will probably have other uses on the client-side in the future as well
-        let data = {color: playerCodes.toCSSClass(++clientCount)};
+        let data = { color: playerCodes.toCSSClass(++clientCount) };
         io.to(client.id).emit("playerColor", data);
     });
 });
@@ -66,10 +66,8 @@ setInterval(() => {
     // this is the entry point for the game logic
     gameInstance.updateField();
     data.boardData = gameInstance.getFieldClasses();
-    // send data to every client
+    // send data to every client that is ingame
     isPlaying.forEach((clientId) => {
-        console.log("client " + clientId + " receives boardData");
-        console.log(data);
         io.to(clientId).emit('dataBroadcast', data);
     });
     io.sockets.emit('broadcast', data);
