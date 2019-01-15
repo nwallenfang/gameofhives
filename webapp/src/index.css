@@ -82,7 +82,7 @@ ol, ul {
   text-align: center;
   width: 15px;
   flex-grow: 1;
-  padding-top: 6.15%; /* trial and error value */
+  padding-top: 6.25%; /* trial and error value */
 }   
 
 .blue {
