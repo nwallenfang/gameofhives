@@ -4,9 +4,9 @@ import { Button, ButtonGroup } from 'react-bootstrap';
 import { Board } from './Board';
 // connection to server	
 import { socket } from './Socket';
-
+import Popup from 'reactjs-popup';
+import { UserForm } from './UserForm';
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -16,12 +16,16 @@ class App extends Component {
   render() {
     return (
       <div id="wrapper">
+
         <ButtonGroup className="titleBar" bsSize="large">
-          <Button>Register</Button>
-          <Button>Login</Button>
+          <Popup trigger={<Button>Register</Button>} position="right center" modal>
+            <UserForm method="POST" action="" buttonName="Register" />
+          </Popup>
+          <Popup trigger={<Button>Login</Button>} position="right center" modal>
+            <UserForm method="POST" action="" buttonName="Login" />
+          </Popup>
           <Button onClick={() => { socket.emit("join"); }}>Play</Button>
         </ButtonGroup>
-
         <Board />
       </div>
     );
