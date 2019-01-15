@@ -62,7 +62,7 @@ class Board extends React.Component {
               {[...Array(this.state.boardData.length)].map((_, rowIndex) =>
                 <div className="board-row" key={rowIndex}>
                   {[...Array(this.state.boardData[rowIndex].length)].map((_, columnIndex) =>
-                    <Square key={rowIndex * columnIndex + columnIndex} 
+                    <Square key={rowIndex * this.state.boardData[rowIndex].length + columnIndex}
                     class={this.state.boardData[rowIndex][columnIndex]}
                     onClick = {() => {
                       socket.emit("clickEvent", {
@@ -93,7 +93,7 @@ class LoadingBar extends Component {
     this.state = {
       width: 0,
 
-    }
+    };
     socket.on('dataBroadcast', data => {
       this.setState({
         width: 0
@@ -116,10 +116,10 @@ class LoadingBar extends Component {
   render() {
     let widthStyle = {
       width: this.state.width + '%',
-    }
+    };
     return (
       <div id="myProgress">
-        <div id="myBar" style={widthStyle}></div>
+        <div id="myBar" style={widthStyle}/>
       </div>
     );
   }
