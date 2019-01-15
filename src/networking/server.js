@@ -70,7 +70,6 @@ setInterval(() => {
     isPlaying.forEach((clientId) => {
         io.to(clientId).emit('dataBroadcast', data);
     });
-    io.sockets.emit('broadcast', data);
 }, tickLength);
 
 
