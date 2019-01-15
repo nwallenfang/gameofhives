@@ -3,18 +3,11 @@ import { socket } from './Socket';
 import { LoadingBar } from './LoadingBar';
 
 class Square extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            class: "",
-            isPreselected: false,
-        }
-    }
     render() {
         return (  // {...} entspricht <script> ... </script>
-            <button className={"square " + this.props.class + (this.props.preselected ? " lighterBackground " + this.props.color : " ")}
+            <button className={"square "  + (this.props.preselected ? " lighterBackground " + this.props.color : " " + this.props.class)}
                 onClick={() => {
-                    this.setState((prevState) => { return { ...prevState, isPreselected: true }; });
+                    // this.setState((prevState) => { return { ...prevState, isPreselected: true }; });
                     this.props.onClick();
                 }} />
         );
