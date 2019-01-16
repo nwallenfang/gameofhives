@@ -9,6 +9,7 @@
     "sqlite3": "^4.0.4"
   },
   "devDependencies": {
+    "@types/socket.io": "^2.1.2",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
