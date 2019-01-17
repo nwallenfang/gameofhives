@@ -13,8 +13,11 @@ code {
     monospace;
 }
 
-.titleBar {
+.titleRow {
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 /* dank geht raus an https://www.w3schools.com/howto/howto_js_progressbar.asp */
@@ -25,12 +28,16 @@ code {
   height: 30px;
 }
 
-#myBar {
+#myBar { /* <LoadingBar> */
   width: 20%;
   height: 30px;
   background-color: green;
 }
 
+
+#gameInfo { /* <GameInfo> */
+  margin-right: 50px;
+}
 
 ol, ul {
   padding-left: 30px;
@@ -67,6 +74,18 @@ ol, ul {
   flex-direction: row;
 
 }
+
+.playerColorSquare { /* Square shown in titleBar */
+  background: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 15px;
+  height: 30px;
+  margin-right: -1px;
+  padding: 0;
+  width: 30px;
+}
+
 
 .square {
   background: #fff;

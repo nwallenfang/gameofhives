@@ -5,7 +5,7 @@ import { LoadingBar } from './LoadingBar';
 class Square extends Component {
     render() {
         return (  // {...} entspricht <script> ... </script>
-            <button className={"square "  + (this.props.preselected ? " lighterBackground " + this.props.color : " " + this.props.class)}
+            <button className={"square " + (this.props.preselected ? " lighterBackground " + this.props.color : " " + this.props.class)}
                 onClick={() => {
                     // this.setState((prevState) => { return { ...prevState, isPreselected: true }; });
                     this.props.onClick();
@@ -22,8 +22,7 @@ export class Board extends Component {
         socket.on('dataBroadcast', data =>
             this.setState((previousState) => { return { ...previousState, ...data }; }));
         // TODO wait for playerColor before rendering the board -> move this to the state of the parent // component. additionally, a normal fetch / ajax request would be more fitting to determine color
-        socket.on('playerColor', data =>
-            this.setState((previousState) => { return { ...previousState, color: data.color }; }));
+
         this.state = {
             boardData: [
             ],
@@ -31,7 +30,6 @@ export class Board extends Component {
                 rowIndex: undefined,
                 colIndex: undefined,
             },
-            color: undefined // move to props and load color in the beginning
         }
     }
 
@@ -72,7 +70,7 @@ export class Board extends Component {
                                         // at the moment, color property is only used to render the preselected square
                                         // maybe the player's color should be displayed in the title bar in the 
                                         // beginning of the game
-                                        color={this.state.color}
+                                        color={this.props.color}
                                     />
                                 )}
                             </div>
