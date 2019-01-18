@@ -23,4 +23,9 @@ io.on("disconnect", (client) => {
     console.log('client ' + client.id + ' has disconnected');
 });
 
-console.log('listening on port ', port);
+console.log('WebSocket listening on port ', port);
+
+// Set up REST-API for user management
+var express = require('express');
+var app = express();
+
