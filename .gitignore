@@ -90,3 +90,6 @@ typings/
 .idea/misc.xml
 .idea/modules.xml
 yarn.lock
+
+# SQLite Databases
+*.db
