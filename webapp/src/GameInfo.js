@@ -14,8 +14,7 @@ export class GameInfo extends Component {
                 <div>
                     <h2 style={{ display: "inline-block", textAlign: "center" }}> Your color: </h2>
                     <div style={{ display: "inline-block" }} className={"playerColorSquare " + this.props.color} ></div>
-                </div >
-            );
+                </div >);
         } else {
             colorInfo = <div />;
         }
