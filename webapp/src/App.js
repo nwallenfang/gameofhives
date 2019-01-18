@@ -25,7 +25,7 @@ class App extends Component {
         <div className="titleRow">
           <ButtonGroup bsSize="large">
             <Popup trigger={<Button>Register</Button>} position="right center" modal>
-              <UserForm method="POST" action="" buttonName="Register" />
+              <UserForm method="POST" action="register" buttonName="Register" />
             </Popup>
             <Popup trigger={<Button>Login</Button>} position="right center" modal>
               <UserForm method="POST" action="" buttonName="Login" />

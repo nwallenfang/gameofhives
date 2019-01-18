@@ -5,12 +5,12 @@ export class UserForm extends Component {
         return (
             <form method={this.props.method} action={this.props.action}>
                 <div class="form-group">
-                    <label for="user">Username</label>
-                    <input name="user" class="form-control" />
+                    <label for="username">Username</label>
+                    <input name="username" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label for="pw">Password</label>
-                    <input type="password" name="pw" class="form-control" />
+                    <label for="password">Password</label>
+                    <input type="password" name="password" class="form-control" />
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn center-block" value={this.props.buttonName} />
