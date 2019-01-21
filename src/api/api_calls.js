@@ -8,15 +8,14 @@ const { decorateApp } = require('@awaitjs/express');
 const app = decorateApp(require("../networking/server")["app"]);
 
 app.use(body_parser.json());
+app.use(body_parser.urlencoded({ extended: true }));
 
 
-
-app.postAsync("/login", async function(req, res, next){
+app.postAsync("/login", async function (req, res, next) {
     let user = req.body["user"];
     let password = req.body["password"];
     let client_id = req.body["client_id"];
-    if (typeof user !== "string" || typeof password !== "string" || typeof client_id !== "string")
-    {
+    if (typeof user !== "string" || typeof password !== "string" || typeof client_id !== "string") {
         res.send({
             success: false
         });
@@ -36,11 +35,11 @@ app.postAsync("/login", async function(req, res, next){
     }
 });
 
-app.postAsync("/register", async function(req, res, next){
-    let user = req.body["user"];
+app.postAsync("/register", async function (req, res, next) {
+    let user = req.body["username"];
     let password = req.body["password"];
-    if (typeof user !== "string" || typeof password !== "string")
-    {
+    console.log(user + ", " + password);
+    if (typeof user !== "string" || typeof password !== "string") {
         res.send({
             success: false
         });
@@ -60,25 +59,25 @@ app.postAsync("/register", async function(req, res, next){
     }
 });
 
-app.post("/logout", function(req, res){
-   let client_id = req.body["client_id"];
-   if (typeof client_id !== "string") {
-       res.send({
-           success: false
-       });
-       return;
-   }
+app.post("/logout", function (req, res) {
+    let client_id = req.body["client_id"];
+    if (typeof client_id !== "string") {
+        res.send({
+            success: false
+        });
+        return;
+    }
 
-   try {
-       res.send({
-           success: logout(client_id)
-       });
+    try {
+        res.send({
+            success: logout(client_id)
+        });
 
-   }
-   catch (err) {
-       res.send({
-           error: err,
-           success: false
-       });
-   }
+    }
+    catch (err) {
+        res.send({
+            error: err,
+            success: false
+        });
+    }
 });
