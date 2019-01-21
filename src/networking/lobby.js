@@ -31,13 +31,7 @@ class Lobby {
 
     loginPlayer(client_id, username) {
         //Check if player is actually present
-        let is_present;
-        io.clients((error, clients) => {
-            if (error) {
-                throw error
-            }
-            is_present = client_id in clients;
-        });
+        let is_present = io.sockets.sockets[client_id] !== undefined;
         if (!is_present)
         {
             return false;
