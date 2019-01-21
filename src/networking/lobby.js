@@ -44,7 +44,7 @@ class Lobby {
         }
         console.log("Player " + username + " logged in");
         this.logged_in_users[client_id] = username;
-        console.log("Logged in users: " + JSON.stringify(this.logged_in_users))
+        console.log("Logged in users: " + JSON.stringify(this.logged_in_users));
         return true;
     }
 
