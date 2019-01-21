@@ -1,6 +1,8 @@
 const GameInstance = require("../game/GameInstance");
 const playerCodes = require('../game/playerCodes');
 
+const observe_login = require("../db/user_management")["observe_login"];
+
 
 class Lobby {
     constructor(x_size, y_size, tick_length) {
@@ -10,17 +12,28 @@ class Lobby {
         this.x_size = x_size;
         this.y_size = y_size;
         this.waiting = null;
-        this.player_game_map = {}
+        this.player_game_map = {};
+        //Logged in users will map a
+        this.logged_in_users = {};
+        observe_login(this.loginPlayer);
     }
 
-    startGame(client1, client2) {
-        this.games[this.max_game_counts] = new Game(client1, client2, this.x_size, this.y_size, this.tick_length);
-        this.player_game_map[client1.id] = this.max_game_counts;
-        this.player_game_map[client2.id] = this.max_game_counts;
-        this.max_game_counts++;
+    loginPlayer(client_id, username) {
+        console.log("Player " + username + "logged in");
+        this.logged_in_users[client_id] = username;
+    }
+
+    logoutPlayer(client_id) {
+        delete this.logged_in_users[client_id];
     }
 
     addPlayer(client) {
+        function startGame(client1, client2) {
+            this.games[this.max_game_counts] = new Game(client1, client2, this.x_size, this.y_size, this.tick_length);
+            this.player_game_map[client1.id] = this.max_game_counts;
+            this.player_game_map[client2.id] = this.max_game_counts;
+            this.max_game_counts++;
+        }
         if (this.waiting === client || client.id in this.player_game_map)
         {
             // Do not add players more than once
@@ -30,7 +43,7 @@ class Lobby {
             this.waiting = client;
         }
         else {
-            this.startGame(this.waiting, client);
+            startGame(this.waiting, client);
             this.waiting = null;
         }
     }
@@ -41,6 +54,10 @@ class Lobby {
             return;
         }
         let game_number = this.player_game_map[player_id];
+        if (game_number === undefined)
+        {
+            return;
+        }
         delete this.player_game_map[player_id];
         if (--this.games[game_number].connected_players === 0)
         {

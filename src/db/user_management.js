@@ -1,8 +1,14 @@
 connection = require("./connection");
 sanitize_html = require("sanitize-html");
+
 const bcrypt = require("bcrypt");
 
+const login_callbacks = [];
 
+function observe_login(callback)
+{
+    login_callbacks.push(callback);
+}
 
 async function register(username, password)
 {
@@ -27,7 +33,7 @@ async function register(username, password)
     }
 }
 
-async function login(username, password)
+async function login(username, password, client_id)
 {
     try {
         let db_result = await connection.query("SELECT password FROM player WHERE name = ?",
@@ -40,10 +46,25 @@ async function login(username, password)
             //User does not exist
             return false;
         }
-        return await bcrypt.compare(password, result_list[0]["password"]);
+        let result = await bcrypt.compare(password, result_list[0]["password"]);
+        console.log(result);
+        if (result)
+        {
+            console.log(typeof login_callbacks);
+            login_callbacks.forEach(function(e) {
+                e(client_id, username);
+            });
+        }
+        return result;
     }
-    catch {
+    catch (err) {
+        console.log(err);
         return false;
     }
 }
 
+module.exports = {
+    "register": register,
+    "login": login,
+    "observe_login": observe_login
+};
