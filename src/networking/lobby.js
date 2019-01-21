@@ -54,11 +54,11 @@ class Lobby {
     }
 
     addPlayer(client) {
-        function startGame(client1, client2) {
-            this.games[this.max_game_counts] = new Game(client1, client2, this.x_size, this.y_size, this.tick_length);
-            this.player_game_map[client1.id] = this.max_game_counts;
-            this.player_game_map[client2.id] = this.max_game_counts;
-            this.max_game_counts++;
+        function startGame(this_ref, client1, client2) {
+            this_ref.games[this_ref.max_game_counts] = new Game(client1, client2, this_ref.x_size, this_ref.y_size, this_ref.tick_length);
+            this_ref.player_game_map[client1.id] = this_ref.max_game_counts;
+            this_ref.player_game_map[client2.id] = this_ref.max_game_counts;
+            this_ref.max_game_counts++;
         }
         if (this.waiting === client || client.id in this.player_game_map)
         {
@@ -69,7 +69,7 @@ class Lobby {
             this.waiting = client;
         }
         else {
-            startGame(this.waiting, client);
+            startGame(this, this.waiting, client);
             this.waiting = null;
         }
     }
