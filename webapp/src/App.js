@@ -28,7 +28,7 @@ class App extends Component {
               <UserForm method="POST" action="register" buttonName="Register" />
             </Popup>
             <Popup trigger={<Button>Login</Button>} position="right center" modal>
-              <UserForm method="POST" action="" buttonName="Login" />
+              <UserForm method="POST" action="login" buttonName="Login" />
             </Popup>
             <Button onClick={() => { socket.emit("join"); }}>Play</Button>
           </ButtonGroup>

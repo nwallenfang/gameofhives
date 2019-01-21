@@ -12,7 +12,7 @@ app.use(body_parser.urlencoded({ extended: true }));
 
 
 app.postAsync("/login", async function (req, res, next) {
-    let user = req.body["user"];
+    let user = req.body["username"];
     let password = req.body["password"];
     let client_id = req.body["client_id"];
     if (typeof user !== "string" || typeof password !== "string" || typeof client_id !== "string") {
