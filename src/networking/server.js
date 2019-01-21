@@ -26,11 +26,13 @@ io.on('connection', (client) => {
     client.on('join', () => {
         gameLobby.addPlayer(client);
     });
+    client.on('disconnect', function() {
+        gameLobby.removePlayer(client.id);
+        console.log('client ' + client.id + ' has disconnected');
+    });
 });
 
 io.on("disconnect", (client) => {
-    gameLobby.removePlayer(client.id);
-    console.log('client ' + client.id + ' has disconnected');
 });
 
 
