@@ -1,7 +1,7 @@
 const GameInstance = require("../game/GameInstance");
 const playerCodes = require('../game/playerCodes');
-
-const observe_login = require("../db/user_management")["observe_login"];
+const io = require("./server")["io"];
+const observe_login_logout = require("../db/user_management")["observe_login_logout"];
 
 
 class Lobby {
@@ -15,21 +15,48 @@ class Lobby {
         this.player_game_map = {};
         //Logged in users will map a
         this.logged_in_users = {};
-        observe_login(this);
+        observe_login_logout(this);
     }
 
-    updateElement(client_id, username) {
-        this.loginPlayer(client_id, username);
+    updateElement(login_bool, client_id, username) {
+        if (login_bool)
+        {
+            return this.loginPlayer(client_id, username);
+        }
+        else
+        {
+            return this.logoutPlayer(client_id);
+        }
     }
 
     loginPlayer(client_id, username) {
+        //Check if player is actually present
+        let is_present;
+        io.clients((error, clients) => {
+            if (error) {
+                throw error
+            }
+            is_present = client_id in clients;
+        });
+        if (!is_present)
+        {
+            return false;
+        }
         console.log("Player " + username + " logged in");
         this.logged_in_users[client_id] = username;
         console.log("Logged in users: " + JSON.stringify(this.logged_in_users))
+        return true;
     }
 
     logoutPlayer(client_id) {
-        delete this.logged_in_users[client_id];
+        if (client_id in this.logged_in_users)
+        {
+            console.log("Player " + this.logged_in_users[client_id] + " logged out");
+            delete this.logged_in_users[client_id];
+            this.removePlayer(client_id);
+            return true;
+        }
+        return false;
     }
 
     addPlayer(client) {
@@ -54,7 +81,7 @@ class Lobby {
     }
 
     removePlayer(player_id) {
-        if (player_id === this.waiting.id) {
+        if (this.waiting !== null && player_id === this.waiting.id) {
             this.waiting = null;
             return;
         }

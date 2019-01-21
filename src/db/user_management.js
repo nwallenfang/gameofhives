@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 
 const login_callbacks = [];
 
-function observe_login(object_to_call)
+function observer_login_logout(object_to_call)
 {
     login_callbacks.push(object_to_call);
 }
@@ -28,9 +28,29 @@ async function register(username, password)
             });
         return true;
     }
-    catch {
+    catch (err) {
+        console.log(err);
         return false;
     }
+}
+
+function logout(client_id)
+{
+    try {
+        let all_true = true;
+        login_callbacks.forEach(function(e) {
+            if (!e.updateElement(false, client_id))
+            {
+                all_true = false;
+            }
+        });
+        return all_true;
+    }
+    catch (err) {
+        console.log(err);
+        return false;
+    }
+
 }
 
 async function login(username, password, client_id)
@@ -51,7 +71,10 @@ async function login(username, password, client_id)
         {
             console.log(typeof login_callbacks);
             login_callbacks.forEach(function(e) {
-                e.updateElement(client_id, username);
+                if (!e.updateElement(true, client_id, username))
+                {
+                    result = false;
+                }
             });
         }
         return result;
@@ -65,5 +88,6 @@ async function login(username, password, client_id)
 module.exports = {
     "register": register,
     "login": login,
-    "observe_login": observe_login
+    "logout": logout,
+    "observe_login_logout": observer_login_logout,
 };
