@@ -5,9 +5,9 @@ const bcrypt = require("bcrypt");
 
 const login_callbacks = [];
 
-function observe_login(callback)
+function observe_login(object_to_call)
 {
-    login_callbacks.push(callback);
+    login_callbacks.push(object_to_call);
 }
 
 async function register(username, password)
@@ -41,18 +41,17 @@ async function login(username, password, client_id)
                 replacements: [username]
             });
         let result_list = db_result[0];
-        if (result_list === [])
+        if (result_list.length === 0)
         {
             //User does not exist
             return false;
         }
         let result = await bcrypt.compare(password, result_list[0]["password"]);
-        console.log(result);
         if (result)
         {
             console.log(typeof login_callbacks);
             login_callbacks.forEach(function(e) {
-                e(client_id, username);
+                e.updateElement(client_id, username);
             });
         }
         return result;

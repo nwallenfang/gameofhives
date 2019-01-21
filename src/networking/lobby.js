@@ -15,12 +15,17 @@ class Lobby {
         this.player_game_map = {};
         //Logged in users will map a
         this.logged_in_users = {};
-        observe_login(this.loginPlayer);
+        observe_login(this);
+    }
+
+    updateElement(client_id, username) {
+        this.loginPlayer(client_id, username);
     }
 
     loginPlayer(client_id, username) {
-        console.log("Player " + username + "logged in");
+        console.log("Player " + username + " logged in");
         this.logged_in_users[client_id] = username;
+        console.log("Logged in users: " + JSON.stringify(this.logged_in_users))
     }
 
     logoutPlayer(client_id) {

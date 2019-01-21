@@ -1,11 +1,10 @@
-const express = require("express");
 const body_parser = require("body-parser");
 
 const login = require("../db/user_management")["login"];
 const register = require("../db/user_management")["register"];
 const { decorateApp } = require('@awaitjs/express');
 
-const app = decorateApp(express());
+const app = decorateApp(require("../networking/server")["app"]);
 
 app.use(body_parser.json());
 
@@ -59,5 +58,3 @@ app.postAsync("/register", async function(req, res, next){
         });
     }
 });
-
-app.listen(8001);

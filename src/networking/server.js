@@ -1,6 +1,9 @@
 const port = 8000;
 
-const io = require('socket.io')(port);
+const app = require('express')();
+const server = require('http').createServer(app);
+
+const io = require('socket.io')(server);
 const GameLobby = require('./lobby');
 // number of rows, number of columns, keep a ratio of 9:16
 const dim = [9, 16];
@@ -23,5 +26,10 @@ io.on("disconnect", (client) => {
     gameLobby.removePlayer(client.id);
     console.log('client ' + client.id + ' has disconnected');
 });
+module.exports = {app: app};
+server.listen(port);
 
 console.log('listening on port ', port);
+
+// Init express
+require("../api/api_calls");

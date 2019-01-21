@@ -13,7 +13,7 @@ const sequelize = new Sequelize('player', null, null, {
     idle: 10000
   },
 
-  storage: './sqlite.db'
+  storage: __dirname + '/sqlite.db'
 });
 
 const init_table =
