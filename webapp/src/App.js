@@ -25,12 +25,12 @@ class App extends Component {
       <div id="wrapper">
         <div className="titleRow">
           <ButtonGroup bsSize="large">
-            <Popup trigger={<Button>Register</Button>} position="right center" modal>
+            <Popup trigger={<Button disabled={this.state.playerName !== undefined} >Register</Button>} position="right center" modal>
               {close => ( // pattern taken from https://react-popup.elazizi.com/use-case---modal
                 <UserForm method="POST" action="register" buttonName="Register" onSuccess={() => { close(); }} />
               )}
             </Popup>
-            <Popup trigger={<Button>Login</Button>} position="right center" modal>
+            <Popup trigger={<Button disabled={this.state.playerName !== undefined}>Login</Button>} position="right center" modal>
               {close => (
                 <UserForm method="POST" action="login" buttonName="Login" onSuccess={(data) => {
                   this.setState((previousState) => { return { ...previousState, ...data } });
@@ -38,12 +38,12 @@ class App extends Component {
                 }} />
               )}
             </Popup>
-            <Button onClick={() => { socket.emit("join"); }}>Play</Button>
+            <Button onClick={() => { socket.emit("join"); }} disabled={this.state.playerName === undefined} >Play</Button>
           </ButtonGroup>
           <GameInfo color={this.state.color} playerName={this.state.playerName} />
         </div>
         <Board color={this.state.color} />
-      </div>
+      </div >
     );
   }
 }
