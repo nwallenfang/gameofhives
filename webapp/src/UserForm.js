@@ -2,10 +2,17 @@ import React, { Component } from 'react';
 import { socket } from './Socket';
 
 export class UserForm extends Component {
+    constructor() {
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(event) {
+
+    }
+
     render() {
-        console.log(document.cookie);
         return (
-            <form method={this.props.method} action={this.props.action}>
+            <form method={this.props.method} action={this.props.action} onSubmit={this.handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="username">Username</label>
                     <input name="username" className="form-control" />
