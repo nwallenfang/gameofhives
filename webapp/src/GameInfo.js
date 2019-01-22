@@ -10,14 +10,17 @@ export class GameInfo extends Component {
         let colorInfo;
         let playerName;
 
+        let playerMsg;
+
         if (this.props.playerName !== undefined) {
-            playerName = (
-                <div style={{ display: "inline-block", textAlign: "center" }}>
-                    <h2 style={{ display: "inline-block", textAlign: "center", margin_left: "20px" }}> Logged in as {this.props.playerName}</h2>
-                </div >);
+            playerMsg = " Logged in as " + this.props.playerName + "";
         } else {
-            playerName = <div />;
+            playerMsg = "User is not logged in ";
         }
+        playerName = (
+            <div style={{ display: "inline-block", textAlign: "center" }}>
+                <h2 style={{ display: "inline-block", textAlign: "center", margin_left: "20px" }}>{playerMsg}</h2>
+            </div >);
 
         if (this.props.color !== undefined) {
             colorInfo = (
