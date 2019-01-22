@@ -1,8 +1,8 @@
 {
   "name": "gameofhive",
   "version": "0.0.1",
-  "description": "web-engineering project GameOfHive",
-  "main": "webapp/public/index.html",
+  "description": "web-engineering project Game of Hives",
+  "main": "src/networking/server.js",
   "dependencies": {
     "@awaitjs/express": "^0.2.0",
     "bcrypt": "^3.0.3",
@@ -22,7 +22,8 @@
     "eslint-plugin-react": "^7.11.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/networking/server.js"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,5 @@
-const port = 8000;
+const port = process.env.OPENSHIFT_NODEJS_PORT || 8000;
+const ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 const app = require('express')();
 const server = require('http').createServer(app);
@@ -26,7 +27,7 @@ io.on('connection', (client) => {
     client.on('join', () => {
         gameLobby.addPlayer(client);
     });
-    client.on('disconnect', function() {
+    client.on('disconnect', function () {
         gameLobby.removePlayer(client.id);
         console.log('client ' + client.id + ' has disconnected');
     });
@@ -36,7 +37,7 @@ io.on("disconnect", (client) => {
 });
 
 
-server.listen(port);
+server.listen(port, ip_address);
 
 console.log('listening on port ', port);
 
