@@ -12,8 +12,8 @@ export class GameInfo extends Component {
 
         if (this.props.playerName !== undefined) {
             playerName = (
-                <div>
-                    <h2 style={{ display: "inline-block", textAlign: "center" }}> Logged in as {this.props.playerName}</h2>
+                <div style={{ display: "inline-block", textAlign: "center" }}>
+                    <h2 style={{ display: "inline-block", textAlign: "center", margin_left: "20px" }}> Logged in as {this.props.playerName}</h2>
                 </div >);
         } else {
             playerName = <div />;
@@ -21,7 +21,7 @@ export class GameInfo extends Component {
 
         if (this.props.color !== undefined) {
             colorInfo = (
-                <div>
+                <div style={{ display: "inline-block", textAlign: "center" }}>
                     <h2 style={{ display: "inline-block", textAlign: "center" }}> Your color: </h2>
                     <div style={{ display: "inline-block" }} className={"playerColorSquare " + this.props.color} ></div>
                 </div >);
