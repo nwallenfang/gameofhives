@@ -8,6 +8,16 @@ import React, { Component } from 'react';
 export class GameInfo extends Component {
     render() {
         let colorInfo;
+        let playerName;
+
+        if (this.props.playerName !== undefined) {
+            playerName = (
+                <div>
+                    <h2 style={{ display: "inline-block", textAlign: "center" }}> Logged in as {this.props.playerName}</h2>
+                </div >);
+        } else {
+            playerName = <div />;
+        }
 
         if (this.props.color !== undefined) {
             colorInfo = (
@@ -22,6 +32,7 @@ export class GameInfo extends Component {
         return (
             <div id="gameInfo">
                 {colorInfo}
+                {playerName}
             </div>
         );
     }

@@ -38,7 +38,7 @@ app.postAsync("/login", async function (req, res, next) {
 app.postAsync("/register", async function (req, res, next) {
     let user = req.body["username"];
     let password = req.body["password"];
-    console.log(user + ", " + password);
+
     if (typeof user !== "string" || typeof password !== "string") {
         res.send({
             success: false

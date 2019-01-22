@@ -16,7 +16,8 @@ class App extends Component {
     super(props);
     this.state = {
       ingame: false,
-      color: undefined
+      color: undefined,
+      playerName: undefined,
     };
   }
   render() {
@@ -28,11 +29,14 @@ class App extends Component {
               <UserForm method="POST" action="register" buttonName="Register" />
             </Popup>
             <Popup trigger={<Button>Login</Button>} position="right center" modal>
-              <UserForm method="POST" action="login" buttonName="Login" />
+              <UserForm method="POST" action="login" buttonName="Login" onSuccess={(data) => {
+                console.log("hi2");
+                this.setState((previousState) => { return { ...previousState, ...data } });
+              }} />
             </Popup>
             <Button onClick={() => { socket.emit("join"); }}>Play</Button>
           </ButtonGroup>
-          <GameInfo color={this.state.color} />
+          <GameInfo color={this.state.color} playerName={this.state.playerName} />
         </div>
         <Board color={this.state.color} />
       </div>
