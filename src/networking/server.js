@@ -25,10 +25,12 @@ io.on('connection', (client) => {
     console.log('client ' + client.id + ' has connected');
 
     client.on('join', () => {
-        gameLobby.addPlayer(client);
+        if (gameLobby.logged_in_users[client.id] !== undefined) {
+            gameLobby.addPlayer(client);
+        }
     });
     client.on('disconnect', function () {
-        gameLobby.removePlayer(client.id);
+        gameLobby.logoutPlayer(client.id);
         console.log('client ' + client.id + ' has disconnected');
     });
 });

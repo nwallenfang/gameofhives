@@ -26,13 +26,15 @@ class App extends Component {
         <div className="titleRow">
           <ButtonGroup bsSize="large">
             <Popup trigger={<Button>Register</Button>} position="right center" modal>
-              <UserForm method="POST" action="register" buttonName="Register" />
+              <UserForm method="POST" action="register" buttonName="Register" onSuccess={() => {
+                  console.log("hi3");
+              }} />
             </Popup>
             <Popup trigger={<Button>Login</Button>} position="right center" modal>
               <UserForm method="POST" action="login" buttonName="Login" onSuccess={(data) => {
                 console.log("hi2");
                 this.setState((previousState) => { return { ...previousState, ...data } });
-              }} />
+              }}/>
             </Popup>
             <Button onClick={() => { socket.emit("join"); }}>Play</Button>
           </ButtonGroup>
