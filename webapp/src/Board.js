@@ -34,12 +34,16 @@ export class Board extends Component {
     }
 
     render() { // whole board has to be rendered on every state change
-        let loadingBar;
+        let loadingBar, caption;
         if (this.state.tickLength !== undefined) {
-            loadingBar = <LoadingBar tickLength={this.state.tickLength} />
+            loadingBar = <LoadingBar tickLength={this.state.tickLength} />;
+            caption =  <h2 style={{ display: "inline-block", textAlign: "center" }}> Random injected message </h2>;
+
         } else { // don't show a loadingBar if the server has not sent tickLength yet
-            loadingBar = <div />
+            loadingBar = <div />;
+            caption = <div/>;
         }
+
         return (
             <div id="wrapper">
                 {loadingBar}
@@ -75,6 +79,9 @@ export class Board extends Component {
                                 )}
                             </div>
                         )}
+                    </div>
+                    <div id="caption">
+                        {caption}
                     </div>
                 </div>
             </div>

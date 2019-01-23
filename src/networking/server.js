@@ -33,6 +33,9 @@ io.on('connection', (client) => {
         gameLobby.logoutPlayer(client.id);
         console.log('client ' + client.id + ' has disconnected');
     });
+    client.on('leave', () =>{
+        gameLobby.removePlayer(client.id);
+    });
 });
 
 server.listen(port, ip_address);

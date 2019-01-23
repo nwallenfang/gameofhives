@@ -11,10 +11,11 @@ import { GameInfo } from './GameInfo';
 class App extends Component {
   constructor(props) {
     socket.on('playerColor', data => // player stops waiting for opponent
-      this.setState((previousState) => { return { ...previousState, color: data.color, waiting: false }; }));
+      this.setState((previousState) => { return { ...previousState, color: data.color, waiting: false, ingame: true}; }));
 
     super(props);
     this.state = {
+      ingame: false,
       waiting: false,
       color: undefined,
       playerName: undefined,
@@ -41,7 +42,11 @@ class App extends Component {
             <Button onClick={() => {
               socket.emit("join");
               this.setState((prevState) => { return { ...prevState, waiting: true } });
-            }} disabled={this.state.playerName === undefined} >Play</Button>
+            }} disabled={this.state.playerName === undefined || this.state.ingame} >Play</Button>
+            <Button onClick={() => {
+              socket.emit("leave");
+              this.setState((prevState) => { return { ...prevState, waiting: false, ingame: false, color: undefined} });
+            }} disabled={this.state.playerName === undefined || (!this.state.waiting && !this.state.ingame)} >Back to Lobby</Button>
           </ButtonGroup>
           <GameInfo color={this.state.color} playerName={this.state.playerName} waiting={this.state.waiting} />
         </div>
