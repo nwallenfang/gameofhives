@@ -109,6 +109,10 @@ ol, ul {
   background: rgb(39,167,216);
 }
 
+.green-font {
+  color: green;
+}
+
 .lighterBackground { /* used to mark selected tile */
   opacity: 0.5;
 }

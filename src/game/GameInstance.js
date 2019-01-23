@@ -19,11 +19,11 @@ class GameInstance {
   add_observer(tick_length, delegate) {
     let interval = setInterval(() => {
       this.updateField();
-      delegate.observe_change();
       if (--this.remaining_ticks === 0)
       {
         clearInterval(interval);
       }
+      delegate.observe_change();
     }, tick_length);
   }
 

@@ -35,13 +35,21 @@ export class Board extends Component {
 
     render() { // whole board has to be rendered on every state change
         let loadingBar, caption;
+        if (this.state.remaining_ticks !== undefined) {
+            caption =
+                <h2 style={{ display: "inline-block", textAlign: "center" }}>
+                    Remaining ticks: <div className="green-font">{this.state.remaining_ticks}</div>
+                </h2>
+        }
+        else
+        {
+            caption = <div/>;
+        }
         if (this.state.tickLength !== undefined) {
             loadingBar = <LoadingBar tickLength={this.state.tickLength} />;
-            caption =  <h2 style={{ display: "inline-block", textAlign: "center" }}> Random injected message </h2>;
 
         } else { // don't show a loadingBar if the server has not sent tickLength yet
-            loadingBar = <div />;
-            caption = <div/>;
+            loadingBar = <div/>;
         }
 
         return (
