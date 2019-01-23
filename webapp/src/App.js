@@ -40,7 +40,7 @@ class App extends Component {
             </Popup>
             <Button onClick={() => {
               socket.emit("join");
-              this.setState((prevState) => { return { ...prevState, waiting: rtrue } });
+              this.setState((prevState) => { return { ...prevState, waiting: true } });
             }} disabled={this.state.playerName === undefined} >Play</Button>
           </ButtonGroup>
           <GameInfo color={this.state.color} playerName={this.state.playerName} waiting={this.state.waiting} />
