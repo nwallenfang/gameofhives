@@ -1,7 +1,7 @@
 playerCodes = require('./playerCodes');
 
 class GameInstance {
-  constructor(height, width) {
+  constructor(height, width, tick_length, tick_amount, delegate) {
     this.gamefield = [];
     for (let i = 0; i < width; i++) {
       this.gamefield.push([]);
@@ -12,6 +12,19 @@ class GameInstance {
     this.player_tmp = [[-1, -1], [-1, -1]];
     this.height = height;
     this.width = width;
+    this.remaining_ticks = tick_amount;
+    this.add_observer(tick_length, delegate)
+  }
+
+  add_observer(tick_length, delegate) {
+    let interval = setInterval(() => {
+      this.updateField();
+      delegate.observe_change();
+      if (--this.remaining_ticks === 0)
+      {
+        clearInterval(interval);
+      }
+    }, tick_length);
   }
 
   setField(x, y, playerCode) {

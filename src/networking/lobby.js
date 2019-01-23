@@ -95,7 +95,7 @@ class Lobby {
 
 class Game {
     constructor(client1, client2, x_size, y_size, tick_length) {
-        this.gameInstance = new GameInstance(x_size, y_size);
+        this.gameInstance = new GameInstance(x_size, y_size, tick_length, 5, this); //Todo change tick amount
         this.data = {
             boardData: this.gameInstance.getFieldClasses(),
             tickLength: tick_length,
@@ -106,18 +106,16 @@ class Game {
         };
         this.setup_client(client1, 1);
         this.setup_client(client2, 2);
-        setInterval(() => {
-            // this is the entry point for the game logic
-            this.gameInstance.updateField();
-            this.data.boardData = this.gameInstance.getFieldClasses();
-            // send data to both clients
-            client1.emit('dataBroadcast', this.data);
-            client2.emit('dataBroadcast', this.data);
-        }, tick_length);
-
-
-
+        this.client1 = client1;
+        this.client2 = client2;
         this.connected_players = 2;
+    }
+
+    observe_change()
+    {
+        this.data.boardData = this.gameInstance.getFieldClasses();
+        this.client1.emit('dataBroadcast', this.data);
+        this.client2.emit('dataBroadcast', this.data);
     }
 
     setup_client(client, client_number) {
@@ -126,12 +124,10 @@ class Game {
         client.emit("playerColor", color_data);
         client.emit("dataBroadcast", this.data);
         let player_code = client_number === 1 ? playerCodes.PLAYER_1 : playerCodes.PLAYER_2;
-        (function foo(game_object) {
-            client.on('clickEvent', function (data) {
-                console.log('client ' + client.id + ' clicked on ' + data.rowIndex + '|' + data.columnIndex);
-                game_object.gameInstance.setField(data.columnIndex, data.rowIndex, player_code);
-            });
-        }(this));
+        client.on('clickEvent', (data) => {
+            console.log('client ' + client.id + ' clicked on ' + data.rowIndex + '|' + data.columnIndex);
+            this.gameInstance.setField(data.columnIndex, data.rowIndex, player_code);
+        });
     }
 }
 
