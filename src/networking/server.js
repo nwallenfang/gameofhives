@@ -35,10 +35,6 @@ io.on('connection', (client) => {
     });
 });
 
-io.on("disconnect", (client) => {
-});
-
-
 server.listen(port, ip_address);
 
 console.log('listening on port ', port);
