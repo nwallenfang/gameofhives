@@ -7,10 +7,10 @@ import React, { Component } from 'react';
  */
 export class GameInfo extends Component {
     render() {
-        let colorInfo;
+        let colorInfo = <div style={{ display: "inline-block", textAlign: "center" }} />;
         let playerName;
-
         let playerMsg;
+        let waiting = <div style={{ display: "inline-block", textAlign: "center" }} />;
 
         if (this.props.playerName !== undefined) {
             playerMsg = " Logged in as " + this.props.playerName + "";
@@ -24,16 +24,23 @@ export class GameInfo extends Component {
 
         if (this.props.color !== undefined) {
             colorInfo = (
-                <div style={{ display: "inline-block", textAlign: "center" }}>
+                <div style={{ display: "inline-block", textAlign: "center", "margin-right": "20px" }}>
                     <h2 style={{ display: "inline-block", textAlign: "center" }}> Your color: </h2>
-                    <div style={{ display: "inline-block" }} className={"playerColorSquare " + this.props.color} ></div>
+                    <div id="colorInfoDiv" style={{ display: "inline-block" }} className={"playerColorSquare " + this.props.color} ></div>
                 </div >);
-        } else {
-            colorInfo = <div />;
         }
 
+        if (this.props.waiting) {
+            waiting = (
+                <div style={{ display: "inline-block", textAlign: "center" }}>
+                    <h2 style={{ display: "inline-block", textAlign: "center", "margin-right": "20px" }}>Waiting for an opponent to join..</h2>
+                </div>);
+        }
+
+
         return (
-            <div id="gameInfo">
+            <div id="gameInfo" style={{ display: "inline-block", textAlign: "center" }}>
+                {waiting}
                 {colorInfo}
                 {playerName}
             </div>
