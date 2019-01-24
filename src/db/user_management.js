@@ -34,6 +34,20 @@ async function register(username, password)
     }
 }
 
+async function increase_gamecount(username)
+{
+    await connection.query("UPDATE player SET gamecount = gamecount + 1 WHERE name=?", {
+        replacements: [username]
+    });
+}
+
+async function increase_wincount(username)
+{
+    await connection.query("UPDATE player SET wincount = wincount + 1 WHERE name=?", {
+        replacements: [username]
+    });
+}
+
 function logout(client_id)
 {
     try {
@@ -90,4 +104,6 @@ module.exports = {
     "login": login,
     "logout": logout,
     "observe_login_logout": observer_login_logout,
+    "increase_gamecount": increase_gamecount,
+    "increase_wincount": increase_wincount,
 };

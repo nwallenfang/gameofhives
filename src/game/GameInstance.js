@@ -13,7 +13,7 @@ class GameInstance {
     this.height = height;
     this.width = width;
     this.remaining_ticks = tick_amount;
-    this.add_observer(tick_length, delegate)
+    this.add_observer(tick_length, delegate);
   }
 
   add_observer(tick_length, delegate) {
@@ -25,6 +25,10 @@ class GameInstance {
       }
       delegate.observe_change();
     }, tick_length);
+  }
+
+  game_end(delegate) {
+    delegate.game_end();
   }
 
   setField(x, y, playerCode) {
@@ -110,7 +114,7 @@ class GameInstance {
 
   // returns a 2d-array of CSS classes representing the gamefield
   getFieldClasses() {
-    var result = [];
+    let result = [];
     for (let i = 0; i < this.height; i++) {
       result.push([]);
       for (let j = 0; j < this.width; j++) {

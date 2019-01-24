@@ -2,6 +2,8 @@ const GameInstance = require("../game/GameInstance");
 const playerCodes = require('../game/playerCodes');
 const io = require("./server")["io"];
 const observe_login_logout = require("../db/user_management")["observe_login_logout"];
+const increase_gamecount = require("../db/user_management")["increase_gamecount"];
+const increase_wincount = require("../db/user_management")["increase_wincount"];
 
 
 class Lobby {
@@ -95,7 +97,7 @@ class Lobby {
 
 class Game {
     constructor(client1, client2, x_size, y_size, tick_length) {
-        this.gameInstance = new GameInstance(x_size, y_size, tick_length, 5, this); //Todo change tick amount
+        this.gameInstance = new GameInstance(x_size, y_size, tick_length, 20, this); //Todo change tick amount
         this.data = {
             boardData: this.gameInstance.getFieldClasses(),
             tickLength: tick_length,
@@ -109,6 +111,11 @@ class Game {
         this.client1 = client1;
         this.client2 = client2;
         this.connected_players = 2;
+    }
+
+    game_end()
+    {
+        increase_gamecount(this.client1)
     }
 
     observe_change()
