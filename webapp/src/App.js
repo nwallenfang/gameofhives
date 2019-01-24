@@ -42,7 +42,7 @@ class App extends Component {
             <Button onClick={() => {
               socket.emit("join");
               this.setState((prevState) => { return { ...prevState, waiting: true } });
-            }} disabled={this.state.playerName === undefined || this.state.ingame} >Play</Button>
+            }} disabled={this.state.playerName === undefined || this.state.ingame || this.state.waiting} >Play</Button>
             <Button onClick={() => {
               socket.emit("leave");
               this.setState((prevState) => { return { ...prevState, waiting: false, ingame: false, color: undefined} });
@@ -50,7 +50,7 @@ class App extends Component {
           </ButtonGroup>
           <GameInfo color={this.state.color} playerName={this.state.playerName} waiting={this.state.waiting} />
         </div>
-        <Board color={this.state.color} />
+        <Board color={this.state.color} disabled={!this.state.ingame}/>
       </div >
     );
   }

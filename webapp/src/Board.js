@@ -34,6 +34,10 @@ export class Board extends Component {
     }
 
     render() { // whole board has to be rendered on every state change
+        if (this.props.disabled)
+        {
+            return <div id="wrapper"/>
+        }
         let loadingBar, caption;
         if (this.state.remaining_ticks !== undefined) {
             caption =
