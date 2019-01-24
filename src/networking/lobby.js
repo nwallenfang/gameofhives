@@ -101,6 +101,7 @@ class Game {
         this.data = {
             boardData: this.gameInstance.getFieldClasses(),
             tickLength: tick_length,
+            remaining_ticks: this.gameInstance.remaining_ticks,
             preselectedTile: {
                 rowIndex: undefined,
                 colIndex: undefined,
