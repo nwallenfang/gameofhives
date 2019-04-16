@@ -56,7 +56,6 @@ export class UserForm extends Component {
                 <div className="form-group">
                     <input type="submit" className="btn center-block" value={this.props.buttonName} />
                 </div>
-
             </form>
         );
     }
