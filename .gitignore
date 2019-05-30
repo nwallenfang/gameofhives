@@ -93,3 +93,6 @@ yarn.lock
 
 # SQLite Databases
 *.db
+
+# ignore build folder
+build/
