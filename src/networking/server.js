@@ -5,7 +5,7 @@ const app = require('express')();
 const server = require('http').createServer(app);
 
 const io = require('socket.io')(server);
-
+io.origins('*:*') // for latest version
 module.exports = {
     "app": app,
     "io": io
@@ -33,7 +33,7 @@ io.on('connection', (client) => {
         gameLobby.logoutPlayer(client.id);
         console.log('client ' + client.id + ' has disconnected');
     });
-    client.on('leave', () =>{
+    client.on('leave', () => {
         gameLobby.removePlayer(client.id);
     });
 });
