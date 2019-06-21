@@ -3,4 +3,4 @@ import openSocket from 'socket.io-client';
 // connection to server	
 
 // determine hostname 
-export const socket = openSocket('http://' + window.location.hostname + ':8000');
+export const socket = openSocket('https://' + window.location.hostname + ':8000');
