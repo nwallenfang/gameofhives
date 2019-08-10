@@ -24,8 +24,8 @@ class App extends Component {
   }
 
   login_with_cookie() {
-    fetch('/' + this.props.action, {
-      method: this.props.method,
+    fetch('/login', {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
