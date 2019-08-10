@@ -88,6 +88,14 @@ ol, ul {
   width: 33px;
 }
 
+#playerInfo {
+  text-align: "left";
+}
+
+#opponentInfo {
+  text-align: "right";
+}
+
 
 .square {
   background: #fff;
