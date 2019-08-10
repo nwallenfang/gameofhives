@@ -20,7 +20,7 @@ export class OpponentInfo extends Component {
             <span id="colorInfoDiv" className={"playerColorSquare " + this.props.playerColor} ></span>
         );
         opponentColor = (
-            <span id="colorInfoDiv" className={"playerColorSquare " + this.props.opponentColor} ></span>
+            <span id="colorInfoDiv" className={"opponentColorSquare " + this.props.opponentColor} ></span>
         );
         return (
             <span >
