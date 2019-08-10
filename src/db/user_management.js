@@ -1,7 +1,7 @@
 connection = require("./connection");
 sanitize_html = require("sanitize-html");
 
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const login_callbacks = [];
 
@@ -67,6 +67,17 @@ function logout(client_id)
 
 }
 
+function login_no_password_check(username, client_id) {
+    let result = true;
+    login_callbacks.forEach(function(e) {
+        if (!e.updateElement(true, client_id, username))
+        {
+            result = false;
+        }
+    });
+    return result;
+}
+
 async function login(username, password, client_id)
 {
     try {
@@ -83,13 +94,7 @@ async function login(username, password, client_id)
         let result = await bcrypt.compare(password, result_list[0]["password"]);
         if (result)
         {
-            console.log(typeof login_callbacks);
-            login_callbacks.forEach(function(e) {
-                if (!e.updateElement(true, client_id, username))
-                {
-                    result = false;
-                }
-            });
+            result = login_no_password_check(username, client_id);
         }
         return result;
     }
