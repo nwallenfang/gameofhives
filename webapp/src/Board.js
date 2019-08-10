@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { socket } from './Socket';
 import { LoadingBar } from './LoadingBar';
-
+import { OpponentInfo } from './OpponentInfo';
 class Square extends Component {
     render() {
         return (  // {...} entspricht <script> ... </script>
@@ -17,7 +17,7 @@ class Square extends Component {
 export class Board extends Component {
     constructor(props) {
         super(props);
-        // server broadcasts the game state in a regular interval
+        // server broadcasts the game state at a regular interval
         // set Board state to trigger an automatic render
         socket.on('dataBroadcast', data =>
             this.setState((previousState) => { return { ...previousState, ...data }; }));
@@ -34,31 +34,33 @@ export class Board extends Component {
     }
 
     render() { // whole board has to be rendered on every state change
-        if (this.props.disabled)
-        {
-            return <div id="wrapper"/>
+        if (this.props.disabled) {
+            return <div id="wrapper" />
         }
-        let loadingBar, caption;
+        let loadingBar, caption, opponentInfo;
+        opponentInfo = <OpponentInfo playerName={this.props.playerName} opponentName={this.props.playerName}
+            playerColor={this.props.color} opponentColor={this.props.opponentColor} playerScore={12} opponentScore={34} />;
+
         if (this.state.remaining_ticks !== undefined) {
             caption =
                 <h2 style={{ display: "inline-block", textAlign: "center" }}>
                     Remaining ticks: <div className="green-font">{this.state.remaining_ticks}</div>
                 </h2>
         }
-        else
-        {
-            caption = <div/>;
+        else {
+            caption = <div />;
         }
         if (this.state.tickLength !== undefined) {
             loadingBar = <LoadingBar tickLength={this.state.tickLength} />;
 
         } else { // don't show a loadingBar if the server has not sent tickLength yet
-            loadingBar = <div/>;
+            loadingBar = <div />;
         }
 
         return (
             <div id="wrapper">
                 {loadingBar}
+                {opponentInfo}
                 <div className="game">
                     <div className="game-board">
                         {[...Array(this.state.boardData.length)].map((_, rowIndex) =>

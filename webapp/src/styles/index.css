@@ -81,12 +81,41 @@ ol, ul {
   font-weight: bold;
   line-height: 15px;
   height: 33px;
-  margin-right: -1px;
-  margin-left: 5px;
-  padding: 0;
+  margin-right: 20px;
+  /* margin-left: 5px; */
+  padding-left: 33px;
+  padding-top: 5px;
   width: 33px;
 }
 
+.opponentColorSquare { /* Square shown in titleBar */
+  background: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 15px;
+  height: 33px;
+  /* margin-right: 5px; */
+  margin-left: 20px;
+  padding-left: 33px;
+  padding-top: 5px;
+  width: 33px;
+}
+
+
+#playerInfo {
+  float: left;
+}
+/* #playerInfo h2 {
+  display: "inline";
+} */
+
+#opponentInfo {
+  float: right;
+}
+
+.score {
+  text-align: center;
+}
 
 .square {
   background: #fff;
