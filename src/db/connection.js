@@ -11,7 +11,7 @@ const sequelize = new Sequelize('player', null, null, {
     max: 1,
     min: 0,
     acquire: 30000,
-    idle: 10000
+    idle: 10000,
   },
 
   storage: `${__dirname}/sqlite.db`,
@@ -30,7 +30,7 @@ function init_sequelize() {
     sequelize.query(init_table).then();
     console.log('Connected sucessfully to DB');
   } catch (err) {
-    console.error('Unable to connect to the database:', err)
+    console.error('Unable to connect to the database:', err);
   }
 }
 
