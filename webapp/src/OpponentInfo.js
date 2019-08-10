@@ -11,13 +11,13 @@ export class OpponentInfo extends Component {
             <h2>{this.props.playerName}</h2>
         );
         playerColor = (
-            <div id="colorInfoDiv" className={"playerColorSquare " + this.props.playerColor} ></div>
+            <span id="colorInfoDiv" className={"playerColorSquare " + this.props.playerColor} ></span>
         );
         // opponentName =
         //     this.props.opponentName }
         //     ;
         opponentColor = (
-            <div id="colorInfoDiv" className={"playerColorSquare " + this.props.opponentColor} ></div>
+            <span id="colorInfoDiv" className={"playerColorSquare " + this.props.opponentColor} ></span>
         );
         return (
             <span>
