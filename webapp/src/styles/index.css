@@ -83,7 +83,8 @@ ol, ul {
   height: 33px;
   margin-right: -1px;
   margin-left: 5px;
-  padding: 0;
+  padding-left: 33px;
+  padding-top: 5px;
   width: 33px;
 }
 
