@@ -3,4 +3,10 @@ import openSocket from 'socket.io-client';
 // connection to server	
 
 // determine hostname 
-export const socket = openSocket('https://' + window.location.hostname); // + ':8000');
+let address;
+if (window.location.hostname === 'localhost') { // development
+    address = 'http://' + window.location.hostname + ':8080';
+} else { // production
+    address = 'https://' + window.location.hostname;
+}
+export const socket = openSocket(address);

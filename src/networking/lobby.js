@@ -114,6 +114,8 @@ class Game {
     observe_change() {
         this.data.boardData = this.gameInstance.getFieldClasses();
         this.data.remaining_ticks = this.gameInstance.remaining_ticks;
+        // this.data.playerScore = 
+        // this.data.opponentScore =
         this.client1.emit('dataBroadcast', this.data);
         this.client2.emit('dataBroadcast', this.data);
     }
