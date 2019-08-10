@@ -1,7 +1,7 @@
 connection = require("./connection");
 sanitize_html = require("sanitize-html");
 
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 
 const login_callbacks = [];
 
