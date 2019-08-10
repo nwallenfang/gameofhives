@@ -9,10 +9,10 @@ export class OpponentInfo extends Component {
         let playerScore, opponentScore;
 
         playerScore = (
-            <h2>{this.props.playerScore}</h2>
+            <h2 className="score" >{this.props.playerScore}</h2>
         );
         opponentScore = (
-            <h2>{this.props.opponentScore}</h2>
+            <h2 className="score" >{this.props.opponentScore}</h2>
         );
 
         playerColor = (

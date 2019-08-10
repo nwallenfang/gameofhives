@@ -113,6 +113,9 @@ ol, ul {
   float: right;
 }
 
+.score {
+  text-align: center;
+}
 
 .square {
   background: #fff;
