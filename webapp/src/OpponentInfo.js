@@ -13,7 +13,6 @@ export class OpponentInfo extends Component {
             </div >);
         playerColor = (
             <div style={{ display: "inline-block", textAlign: "center", marginRight: "20px" }}>
-                <h2 style={{ display: "inline-block", textAlign: "center" }}> Your color: </h2>
                 <div id="colorInfoDiv" style={{ display: "inline-block" }} className={"playerColorSquare " + this.props.playerColor} ></div>
             </div >
         );
@@ -23,7 +22,6 @@ export class OpponentInfo extends Component {
             </div >);
         opponentColor = (
             <div style={{ display: "inline-block", textAlign: "center", marginRight: "20px" }}>
-                <h2 style={{ display: "inline-block", textAlign: "center" }}> Your color: </h2>
                 <div id="colorInfoDiv" style={{ display: "inline-block" }} className={"playerColorSquare " + this.props.opponentColor} ></div>
             </div >
         );
