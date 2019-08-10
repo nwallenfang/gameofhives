@@ -20,7 +20,32 @@ class App extends Component {
       color: undefined,
       playerName: undefined,
     };
+    this.login_with_cookie();
   }
+
+  login_with_cookie() {
+    fetch('/' + this.props.action, {
+      method: this.props.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      referrer: "no-referrer", // no-referrer, *client
+      body: JSON.stringify({
+        client_id: socket.id
+      }), // body data type must match "Content-Type" header
+    })
+        .then((response) => {
+          return response.json();
+        })
+        .then((myJson) => {
+          if (myJson.success) {
+            // Set Player name
+            this.state.name = myJson.user;
+          }
+        });
+
+  }
+
   render() {
     return (
       <div id="wrapper">
