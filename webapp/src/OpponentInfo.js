@@ -5,7 +5,6 @@ import React, { Component } from 'react';
  */
 export class OpponentInfo extends Component {
     render() {
-        let playerName, opponentName;
         let playerColor, opponentColor;
         let playerScore, opponentScore;
 

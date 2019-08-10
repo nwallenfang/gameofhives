@@ -39,7 +39,7 @@ export class Board extends Component {
         }
         let loadingBar, caption, opponentInfo;
         opponentInfo = <OpponentInfo playerName={this.props.playerName} opponentName={this.props.playerName}
-            playerColor={this.props.color} opponentColor={this.props.opponentColor} />;
+            playerColor={this.props.color} opponentColor={this.props.opponentColor} playerScore={12} opponentScore={34} />;
 
         if (this.state.remaining_ticks !== undefined) {
             caption =
