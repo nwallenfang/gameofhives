@@ -26,7 +26,7 @@ export class OpponentInfo extends Component {
             </div >
         );
         return (
-            <div style={{ display: "inline-block", textAlign: "center" }}>
+            <div>
                 {playerName}
                 {playerColor}
                 <h2>vs.</h2>
