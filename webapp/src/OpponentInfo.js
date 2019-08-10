@@ -8,31 +8,25 @@ export class OpponentInfo extends Component {
         let playerName, opponentName;
         let playerColor, opponentColor;
         playerName = (
-            <div style={{ display: "inline-block", textAlign: "center" }}>
-                <h2 style={{ display: "inline-block", textAlign: "center", margin_left: "20px" }}>{this.props.playerName}</h2>
-            </div >);
+            <h2>{this.props.playerName}</h2>
+        );
         playerColor = (
-            <div style={{ display: "inline-block", textAlign: "center", marginRight: "20px" }}>
-                <div id="colorInfoDiv" style={{ display: "inline-block" }} className={"playerColorSquare " + this.props.playerColor} ></div>
-            </div >
+            <div id="colorInfoDiv" className={"playerColorSquare " + this.props.playerColor} ></div>
         );
         opponentName = (
-            <div style={{ display: "inline-block", textAlign: "center" }}>
-                <h2 style={{ display: "inline-block", textAlign: "center", margin_left: "20px" }}>{this.props.opponentName}</h2>
-            </div >);
+            <h2 >{this.props.opponentName}</h2>
+        );
         opponentColor = (
-            <div style={{ display: "inline-block", textAlign: "center", marginRight: "20px" }}>
-                <div id="colorInfoDiv" style={{ display: "inline-block" }} className={"playerColorSquare " + this.props.opponentColor} ></div>
-            </div >
+            <div id="colorInfoDiv" className={"playerColorSquare " + this.props.opponentColor} ></div>
         );
         return (
-            <div>
+            <span>
                 {playerName}
                 {playerColor}
                 <h2>vs.</h2>
                 {opponentName}
                 {opponentColor}
-            </div>
+            </span>
         );
 
     }
