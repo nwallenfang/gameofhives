@@ -1,11 +1,11 @@
-const port = process.env.OPENSHIFT_NODEJS_PORT || 8000;
+const port = process.env.OPENSHIFT_NODEJS_PORT || 443;
 const ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 const app = require('express')();
 const server = require('http').createServer(app);
 
 const io = require('socket.io')(server);
-io.origins('*:*') // for latest version
+io.origins('*:*'); // for latest version
 module.exports = {
     "app": app,
     "io": io
