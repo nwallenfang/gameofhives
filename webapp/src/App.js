@@ -11,7 +11,7 @@ import { GameInfo } from './GameInfo';
 class App extends Component {
   constructor(props) {
     socket.on('playerColor', data => // player stops waiting for opponent
-      this.setState((previousState) => { return { ...previousState, color: data.color, waiting: false, ingame: true }; }));
+      this.setState((previousState) => { return { ...previousState, color: data.color, waiting: false, ingame: true, opponentColor: data.opponentColor }; }));
 
     super(props);
     this.state = {
@@ -50,7 +50,7 @@ class App extends Component {
           </ButtonGroup>
           <GameInfo color={this.state.color} playerName={this.state.playerName} waiting={this.state.waiting} />
         </div>
-        <Board color={this.state.color} disabled={!this.state.ingame} />
+        <Board color={this.state.color} disabled={!this.state.ingame} playerName={this.state.playerName} opponentName={this.state.opponentName} opponentColor={this.state.opponentColor} />
       </div >
     );
   }

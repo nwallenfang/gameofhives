@@ -37,7 +37,6 @@ export class GameInfo extends Component {
                 </div>);
         }
 
-
         return (
             <div id="gameInfo" style={{ display: "inline-block", textAlign: "center" }}>
                 {waiting}

@@ -21,12 +21,10 @@ class Lobby {
     }
 
     updateElement(login_bool, client_id, username) {
-        if (login_bool)
-        {
+        if (login_bool) {
             return this.loginPlayer(client_id, username);
         }
-        else
-        {
+        else {
             return this.logoutPlayer(client_id);
         }
     }
@@ -34,8 +32,7 @@ class Lobby {
     loginPlayer(client_id, username) {
         //Check if player is actually present
         let is_present = io.sockets.sockets[client_id] !== undefined;
-        if (!is_present)
-        {
+        if (!is_present) {
             return false;
         }
         console.log("Player " + username + " logged in");
@@ -45,8 +42,7 @@ class Lobby {
     }
 
     logoutPlayer(client_id) {
-        if (client_id in this.logged_in_users)
-        {
+        if (client_id in this.logged_in_users) {
             console.log("Player " + this.logged_in_users[client_id] + " logged out");
             delete this.logged_in_users[client_id];
             this.removePlayer(client_id);
@@ -62,8 +58,7 @@ class Lobby {
             this_ref.player_game_map[client2.id] = this_ref.max_game_counts;
             this_ref.max_game_counts++;
         }
-        if (this.waiting === client || client.id in this.player_game_map)
-        {
+        if (this.waiting === client || client.id in this.player_game_map) {
             // Do not add players more than once
             return;
         }
@@ -82,13 +77,11 @@ class Lobby {
             return;
         }
         let game_number = this.player_game_map[player_id];
-        if (game_number === undefined)
-        {
+        if (game_number === undefined) {
             return;
         }
         delete this.player_game_map[player_id];
-        if (--this.games[game_number].connected_players === 0)
-        {
+        if (--this.games[game_number].connected_players === 0) {
             delete this.games[game_number];
         }
     }
@@ -114,13 +107,11 @@ class Game {
         this.connected_players = 2;
     }
 
-    game_end()
-    {
+    game_end() {
         increase_gamecount(this.client1)
     }
 
-    observe_change()
-    {
+    observe_change() {
         this.data.boardData = this.gameInstance.getFieldClasses();
         this.data.remaining_ticks = this.gameInstance.remaining_ticks;
         this.client1.emit('dataBroadcast', this.data);
@@ -128,11 +119,12 @@ class Game {
     }
 
     setup_client(client, client_number) {
+        let player_code = client_number === 1 ? playerCodes.PLAYER_1 : playerCodes.PLAYER_2;
+        let other_number = client_number === 1 ? 2 : 1;
         console.log('client ' + client.id + ' joined the game');
-        let color_data = { color: playerCodes.toCSSClass(client_number)};
+        let color_data = { color: playerCodes.toCSSClass(client_number), opponentColor: playerCodes.toCSSClass(other_number) };
         client.emit("playerColor", color_data);
         client.emit("dataBroadcast", this.data);
-        let player_code = client_number === 1 ? playerCodes.PLAYER_1 : playerCodes.PLAYER_2;
         client.on('clickEvent', (data) => {
             console.log('client ' + client.id + ' clicked on ' + data.rowIndex + '|' + data.columnIndex);
             this.gameInstance.setField(data.columnIndex, data.rowIndex, player_code);
