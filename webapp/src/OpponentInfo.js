@@ -26,8 +26,8 @@ export class OpponentInfo extends Component {
             <span >
                 <div id="playerInfo">
                     <h2>
-                        {this.props.playerName}
                         {playerColor}
+                        {this.props.playerName}
                         {playerScore}
                     </h2>
                 </div>

@@ -89,11 +89,14 @@ ol, ul {
 }
 
 #playerInfo {
-  text-align: "left";
+  float: "left";
+}
+#playerInfo h2 {
+  display: "inline";
 }
 
 #opponentInfo {
-  text-align: "right";
+  float: "right";
 }
 
 
