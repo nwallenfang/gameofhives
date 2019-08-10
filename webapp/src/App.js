@@ -24,7 +24,7 @@ class App extends Component {
   }
 
   login_with_cookie() {
-    fetch('/login', {
+    fetch('/api/login', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
