@@ -1,5 +1,5 @@
 const port = process.env.OPENSHIFT_NODEJS_PORT || 8000;
-const ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+const ip_address = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 
 const app = require('express')();
 const server = require('http').createServer(app);
