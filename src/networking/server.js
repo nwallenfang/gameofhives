@@ -1,4 +1,4 @@
-const port = process.env.OPENSHIFT_NODEJS_PORT || 443;
+const port = process.env.OPENSHIFT_NODEJS_PORT || 43120;
 const ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 const app = require('express')();
@@ -22,7 +22,7 @@ const tickLength = 4000;
 let gameLobby = new GameLobby(dim[0], dim[1], tickLength);
 
 io.on('connection', (client) => {
-    console.log('client ' + client.id + ' has connected');
+    console.log(`client ${client.id} has connected`);
 
     client.on('join', () => {
         if (gameLobby.logged_in_users[client.id] !== undefined) {
