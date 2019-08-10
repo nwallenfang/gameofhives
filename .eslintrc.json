@@ -2,6 +2,7 @@
     "extends": "airbnb",
     "rules": {
         "no-console": "off",
-        "prefer-destructuring": "off"
+        "prefer-destructuring": "off",
+        "camelcase": "off"
     }
 }

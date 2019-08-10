@@ -1,9 +1,10 @@
-const GameInstance = require("../game/GameInstance");
+/* eslint-disable indent */
+const GameInstance = require('../game/GameInstance');
 const playerCodes = require('../game/playerCodes');
-const io = require("./server")["io"];
-const observe_login_logout = require("../db/user_management")["observe_login_logout"];
-const increase_gamecount = require("../db/user_management")["increase_gamecount"];
-const increase_wincount = require("../db/user_management")["increase_wincount"];
+const io = require('./server').io;
+const observe_login_logout = require('../db/user_management').observe_login_logout;
+const increase_gamecount = require('../db/user_management').increase_gamecount;
+const increase_wincount = require('../db/user_management').increase_wincount;
 
 
 class Lobby {
@@ -15,7 +16,7 @@ class Lobby {
         this.y_size = y_size;
         this.waiting = null;
         this.player_game_map = {};
-        //Logged in users will map a
+        // Logged in users will map a
         this.logged_in_users = {};
         observe_login_logout(this);
     }
@@ -24,26 +25,26 @@ class Lobby {
         if (login_bool) {
             return this.loginPlayer(client_id, username);
         }
-        else {
-            return this.logoutPlayer(client_id);
-        }
+
+        return this.logoutPlayer(client_id);
+
     }
 
     loginPlayer(client_id, username) {
-        //Check if player is actually present
-        let is_present = io.sockets.sockets[client_id] !== undefined;
+        // Check if player is actually present
+        const is_present = io.sockets.sockets[client_id] !== undefined;
         if (!is_present) {
             return false;
         }
-        console.log("Player " + username + " logged in");
+        console.log('Player ' + username + ' logged in');
         this.logged_in_users[client_id] = username;
-        console.log("Logged in users: " + JSON.stringify(this.logged_in_users));
+        console.log('Logged in users: ' + JSON.stringify(this.logged_in_users));
         return true;
     }
 
     logoutPlayer(client_id) {
         if (client_id in this.logged_in_users) {
-            console.log("Player " + this.logged_in_users[client_id] + " logged out");
+            console.log('Player ' + this.logged_in_users[client_id] + ' logged out');
             delete this.logged_in_users[client_id];
             this.removePlayer(client_id);
             return true;
@@ -64,8 +65,7 @@ class Lobby {
         }
         if (this.waiting === null) {
             this.waiting = client;
-        }
-        else {
+        } else {
             startGame(this, this.waiting, client);
             this.waiting = null;
         }
@@ -76,7 +76,7 @@ class Lobby {
             this.waiting = null;
             return;
         }
-        let game_number = this.player_game_map[player_id];
+        const game_number = this.player_game_map[player_id];
         if (game_number === undefined) {
             return;
         }
@@ -90,7 +90,7 @@ class Lobby {
 
 class Game {
     constructor(client1, client2, x_size, y_size, tick_length) {
-        this.gameInstance = new GameInstance(x_size, y_size, tick_length, 20, this); //Todo change tick amount
+        this.gameInstance = new GameInstance(x_size, y_size, tick_length, 20, this); // Todo change tick amount
         this.data = {
             boardData: this.gameInstance.getFieldClasses(),
             tickLength: tick_length,
@@ -108,7 +108,7 @@ class Game {
     }
 
     game_end() {
-        increase_gamecount(this.client1)
+        increase_gamecount(this.client1);
     }
 
     observe_change() {
@@ -119,14 +119,17 @@ class Game {
     }
 
     setup_client(client, client_number) {
-        let player_code = client_number === 1 ? playerCodes.PLAYER_1 : playerCodes.PLAYER_2;
-        let other_number = client_number === 1 ? 2 : 1;
-        console.log('client ' + client.id + ' joined the game');
-        let color_data = { color: playerCodes.toCSSClass(client_number), opponentColor: playerCodes.toCSSClass(other_number) };
-        client.emit("playerColor", color_data);
-        client.emit("dataBroadcast", this.data);
+        const player_code = client_number === 1 ? playerCodes.PLAYER_1 : playerCodes.PLAYER_2;
+        const other_number = client_number === 1 ? 2 : 1;
+        console.log(`client ${client.id} joined the game`);
+        const color_data = {
+            color: playerCodes.toCSSClass(client_number),
+            opponentColor: playerCodes.toCSSClass(other_number)
+        };
+        client.emit('playerColor', color_data);
+        client.emit('dataBroadcast', this.data);
         client.on('clickEvent', (data) => {
-            console.log('client ' + client.id + ' clicked on ' + data.rowIndex + '|' + data.columnIndex);
+            console.log(`client ${client.id} clicked on ${data.rowIndex}|${data.columnIndex}`);
             this.gameInstance.setField(data.columnIndex, data.rowIndex, player_code);
         });
     }
