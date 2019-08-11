@@ -5,8 +5,9 @@ import openSocket from 'socket.io-client';
 // determine hostname 
 let address;
 if (window.location.hostname === 'localhost') { // development
-    address = 'http://' + window.location.hostname + ':8080';
+    address = `http://${window.location.hostname}:3000`;
 } else { // production
-    address = 'https://' + window.location.hostname;
+    address = `https://${window.location.hostname}`;
 }
+// eslint-disable-next-line import/prefer-default-export
 export const socket = openSocket(address);
